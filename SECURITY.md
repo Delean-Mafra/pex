@@ -12,7 +12,7 @@ currently being supported with security updates.
 | Version | Supported          |
 | ------- | ------------------ |
 | 2.0.0.2   | :white_check_mark: |
-| 1.0.0.70  | :x:                |
+| 1.0.0.47  | :x:                |
 | 2.0.0.0   | :white_check_mark: |
 | < 2.0.0.0  | :x:                |
 
