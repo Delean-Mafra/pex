@@ -569,7 +569,7 @@ input("Pressione Enter para continuar...")
  
 
  
-
+Informação documentada: https://descomplica2-my.sharepoint.com/:w:/g/personal/delean_2444070_aluno_faculdadedescomplica_com_br/ETkGd5quBbdDlRpbeOilzvcBpsXROP3t3QbiCxx5hkVtkw?e=Qrq4mq
  
 
- 
+Roteiro do projeto: https://descomplica2-my.sharepoint.com/:w:/g/personal/delean_2444070_aluno_faculdadedescomplica_com_br/EWoeghM5UuZOisuQEx7kSwgBP1ojKAonvG2zkhfZtY5oqQ?e=3N3x69
