@@ -1,5 +1,4 @@
-CDADOS - Projeto de Extensão I - Excluir arquivos duplicados está licenciado sob CC BY-NC-ND 4.0© 2 por Delean Mafra 
-CDADOS - Extension Project I - Delete duplicate files © 2 by Delean Mafra is licensed under CC BY-NC-ND 4.0 
+# CDADOS - Projeto de Extensão I - Excluir arquivos duplicados está licenciado sob CC BY-NC-ND 4.0© 2 por Delean Mafra 
 
 # Política de Privacidade
 
@@ -65,6 +64,8 @@ Exclusão de Dados: Após a conclusão do projeto, todos os dados temporários o
 ## Alterações na Política de Privacidade
 
 Esta política pode ser atualizada periodicamente. Quaisquer mudanças substanciais serão anunciadas no repositório GitHub, onde o projeto está hospedado. Recomendamos revisar esta política regularmente para se manter informado sobre como estamos protegendo sua privacidade.
+
+# CDADOS - Extension Project I - Delete duplicate files © 2 by Delean Mafra is licensed under CC BY-NC-ND 4.0 
 
 
 <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
