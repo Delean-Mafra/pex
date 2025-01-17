@@ -1,4 +1,4 @@
-# CDADOS - Projeto de Extensão I - Excluir arquivos duplicados Está licenciado sob CC BY-NC-ND 4.0 © por Delean Mafra 
+# CDADOS - Projeto de Extensão I - Excluir arquivos duplicados, está licenciado sob CC BY-NC-ND 4.0 © por Delean Mafra 
 
 # Política de Privacidade
 
@@ -65,7 +65,7 @@ Exclusão de Dados: Após a conclusão do projeto, todos os dados temporários o
 
 Esta política pode ser atualizada periodicamente. Quaisquer mudanças substanciais serão anunciadas no repositório GitHub, onde o projeto está hospedado. Recomendamos revisar esta política regularmente para se manter informado sobre como estamos protegendo sua privacidade.
 
-# CDADOS - Extension Project I - Delete Duplicate Files is licensed under CC BY-NC-ND 4.0 © by Delean Mafra
+# CDADOS - Extension Project I - Delete Duplicate Files, is licensed under CC BY-NC-ND 4.0 © by Delean Mafra
 
 # Privacy Policy
 
