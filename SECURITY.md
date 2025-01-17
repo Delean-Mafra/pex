@@ -1,3 +1,6 @@
+CDADOS - Projeto de Extensão I - Excluir arquivos duplicados está licenciado sob CC BY-NC-ND 4.0© 2 por Delean Mafra 
+CDADOS - Extension Project I - Delete duplicate files © 2 by Delean Mafra is licensed under CC BY-NC-ND 4.0 
+
 # Política de Privacidade
 
 A Política de Privacidade descreve como coletamos, usamos, protegemos e compartilhamos informações durante o uso do projeto Automação da Conferência de Recibos de Pagamentos de Eventos, desenvolvido no contexto do Projeto de Extensão Universitária. Este projeto visa otimizar processos administrativos para a Igreja Cristã Apostólica Renascer em Cristo, com foco na automação da verificação de duplicidade de recibos de pagamentos de eventos.
@@ -63,4 +66,6 @@ Exclusão de Dados: Após a conclusão do projeto, todos os dados temporários o
 
 Esta política pode ser atualizada periodicamente. Quaisquer mudanças substanciais serão anunciadas no repositório GitHub, onde o projeto está hospedado. Recomendamos revisar esta política regularmente para se manter informado sobre como estamos protegendo sua privacidade.
 
+
+<p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
 
