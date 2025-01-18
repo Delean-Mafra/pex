@@ -65,6 +65,8 @@ Exclusão de Dados: Após a conclusão do projeto, todos os dados temporários o
 
 Esta política pode ser atualizada periodicamente. Quaisquer mudanças substanciais serão anunciadas no repositório GitHub, onde o projeto está hospedado. Recomendamos revisar esta política regularmente para se manter informado sobre como estamos protegendo sua privacidade.
 
+<p xmlns:cc="http://creativecommons.org/ns#" >Este trabalho está licenciado sob <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
+
 # CDADOS - Extension Project I - Delete Duplicate Files, is licensed under CC BY-NC-ND 4.0 © by Delean Mafra
 
 # Privacy Policy
