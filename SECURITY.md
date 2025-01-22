@@ -4,12 +4,9 @@ A Política de Privacidade descreve como coletamos, usamos, protegemos e compart
 
 
 
-## Supported Versions
+## Versões suportadas
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
+| Versões | Suportadas          |
 | ------- | ------------------ |
 | 2.0.0.2   | :white_check_mark: |
 | 1.0.0.47  | :x:                |
@@ -73,8 +70,6 @@ The Privacy Policy describes how we collect, use, protect, and share information
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
