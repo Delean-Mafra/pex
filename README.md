@@ -1,5 +1,9 @@
 # CDADOS - Projeto de Extensão I - Delean Mafra
 
+## Obs
+
+O nome do pastor e dos membros da igreja foram removidos para preservar suas identidades
+
 ## Descrição do Projeto
 
 Este projeto tem como objetivo automatizar a conferência de recibos de pagamentos de eventos beneficentes da Igreja Renascer em Cristo. Com a implementação deste sistema, busca-se:
@@ -21,10 +25,10 @@ Com esses objetivos, o projeto visa não apenas a eficiência operacional, mas t
 Iniciei o projeto preenchendo a “CARTA DE APRESENTAÇÃO”. Escolhi a organização IGREJA CRISTÃ APOSTÓLICA RENASCER EM CRISTO (nome fantasia: Igreja Apostólica Renascer em Cristo) para visitar e me apresentar. Após a autorização da organização, com o preenchimento do “TERMO DE AUTORIZAÇÃO PARA REALIZAÇÃO DAS ATIVIDADES EXTENSIONISTAS”, iniciei o projeto.
 
 ### Planejamento de Visita
-Visitei a igreja e conversei com o pastor Julian que é o oficial responsável pela tesouraria da igreja. Identifiquei as principais áreas de interesse e as questões a serem exploradas durante a visita.
+Visitei a igreja e conversei com o pastor  que é o oficial responsável pela tesouraria da igreja. Identifiquei as principais áreas de interesse e as questões a serem exploradas durante a visita.
 
 ### Contatos Iniciais
-Estabeleci comunicação com os representantes da Igreja Renascer em Cristo para agendar reuniões e visitas. Falei inicialmente com o pastor Julian que informou que no último evento beneficente ele e o bispo da igreja acabaram perdendo praticamente o sábado inteiro pois receberam vários recibos de pagamentos duplicados, então eles precisaram fazer a conferência de mais de 100 recibos abrindo 1 a 1 para ver quais eram duplicados e quais ainda precisavam ser lançados no sistema financeiro da igreja. O mesmo mencionou que seria muito útil se existisse um sistema que identificasse os recibos duplicados e já os excluíssem para evitar o retrabalho. Confirmei a disponibilidade e obtive informações preliminares sobre a instituição.
+Estabeleci comunicação com os representantes da Igreja Renascer em Cristo para agendar reuniões e visitas. Falei inicialmente com o pastor  que informou que no último evento beneficente ele e o bispo da igreja acabaram perdendo praticamente o sábado inteiro pois receberam vários recibos de pagamentos duplicados, então eles precisaram fazer a conferência de mais de 100 recibos abrindo 1 a 1 para ver quais eram duplicados e quais ainda precisavam ser lançados no sistema financeiro da igreja. O mesmo mencionou que seria muito útil se existisse um sistema que identificasse os recibos duplicados e já os excluíssem para evitar o retrabalho. Confirmei a disponibilidade e obtive informações preliminares sobre a instituição.
 
 ### Realização de Reuniões
 Conduzi reuniões iniciais com os representantes da Igreja Renascer em Cristo para discutir o contexto, a missão e as necessidades da instituição. Documentei as informações coletadas durante as reuniões, incluindo os desafios enfrentados e as oportunidades de colaboração. A documentação completa do projeto pode ser acessada pelo link: [CDADOS - Projeto de Extensão I - Delean Mafra](https://descomplica2-my.sharepoint.com/:w:/g/personal/delean_2444070_aluno_faculdadedescomplica_com_br/ETkGd5quBbdDlRpbeOilzvcBpsXROP3t3QbiCxx5hkVtkw?e=Qrq4mq)
@@ -41,7 +45,7 @@ A atualização no código permite ler automaticamente o caminho da pasta a part
 
 ### Observação
 
-Inicialmente, optei por utilizar a biblioteca `kivy` para criar uma interface mais agradável, combinada com a biblioteca `cryptography` para criar um registro de licença criptografado, evitando que o programa fosse compartilhado com outras pessoas além do pastor Julian e do Bispo Gabriel. Infelizmente, tive diversos problemas com as duas bibliotecas, pois o código funcionava perfeitamente no meu ambiente de teste, porém, quando era compilado para um executável, ele não conseguia ler corretamente o registro de licença criado. Outro problema foi que a compilação do programa utilizando a biblioteca `kivy` era muito longa, levando aproximadamente 30 minutos para concluir cada compilação. Foram compiladas 47 versões (1.0.0.47) desse projeto inicial, totalizando aproximadamente 23 horas de programação e compilação do programa na versão 1.0.0.0.
+Inicialmente, optei por utilizar a biblioteca `kivy` para criar uma interface mais agradável, combinada com a biblioteca `cryptography` para criar um registro de licença criptografado, evitando que o programa fosse compartilhado com outras pessoas além do pastor  e do Bispo Gabriel. Infelizmente, tive diversos problemas com as duas bibliotecas, pois o código funcionava perfeitamente no meu ambiente de teste, porém, quando era compilado para um executável, ele não conseguia ler corretamente o registro de licença criado. Outro problema foi que a compilação do programa utilizando a biblioteca `kivy` era muito longa, levando aproximadamente 30 minutos para concluir cada compilação. Foram compiladas 47 versões (1.0.0.47) desse projeto inicial, totalizando aproximadamente 23 horas de programação e compilação do programa na versão 1.0.0.0.
 
 ### 3ª Parte do Projeto: Lançando a versão 2.0.0.0
 
