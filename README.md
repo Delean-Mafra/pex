@@ -42,7 +42,7 @@ Observação:
 
   
 
-Inicialmente, optei por utilizar a biblioteca “kivy” para criar uma interface mais agradável, combinada com a biblioteca "cryptography” para criar um registro de licença criptografado, evitando que o programa fosse compartilhado com outras pessoas além do pastor Julian e do Bispo Gabriel. Infelizmente, tive diversos problemas com as duas bibliotecas, pois o código funcionava perfeitamente no meu ambiente de teste, porém, quando era compilado para um executável, ele não conseguia ler corretamente o registro de licença criado. Outro problema foi que a compilação do programa utilizando a biblioteca “kivy” era muito longa, levando aproximadamente 30 para concluir cada compilação. Foram compiladas 47 versões (1.0.0.47) desse projeto inicial, totalizando aproximadamente 23 horas de programação e compilação do programa. 
+Inicialmente, optei por utilizar a biblioteca “kivy” para criar uma interface mais agradável, combinada com a biblioteca "cryptography” para criar um registro de licença criptografado, evitando que o programa fosse compartilhado com outras pessoas além do pastor Julian e do Bispo Gabriel. Infelizmente, tive diversos problemas com as duas bibliotecas, pois o código funcionava perfeitamente no meu ambiente de teste, porém, quando era compilado para um executável, ele não conseguia ler corretamente o registro de licença criado. Outro problema foi que a compilação do programa utilizando a biblioteca “kivy” era muito longa, levando aproximadamente 30 minutos para concluir cada compilação. Foram compiladas 47 versões (1.0.0.47) desse projeto inicial, totalizando aproximadamente 23 horas de programação e compilação do programa na versão 1.0.0.0
 
   
 
@@ -70,6 +70,7 @@ Separação de Funções: A criação de uma GUI (Graphical User Interface) perm
 
 Manutenibilidade: Interfaces gráficas facilitam futuras atualizações e a introdução de novas funcionalidades sem a necessidade de alterar a lógica principal do código.  
 
+A maior vantagem de trocar a a biblioteca “kivy” pela “Tkinter” foi que a “Tkinter” não apresentou nenhum conflito de leitura de arquivos após a compilação, sendo possivel lançar lançar a versão final na segunda compilação da versão 2.0.0.0 sendo a versão final 2.0.0.2. O tempo de compilação reduziu de 30 minutos para 5 minutos e a nova versão embora não possua uma interface tão moderna e avançada como o “kivy” ela atendedeu o mesmo objetivo sem perder nenhuma funcionalidade
   
 
 4ª Parte do Projeto: Criação do Arquivo de Controle de Versão (version.txt)  
