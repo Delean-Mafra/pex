@@ -83,7 +83,7 @@ A implementação de um sistema de controle de versão utilizando o arquivo `ver
   - **Conversão para Executável**: A criação do arquivo de controle de versão é essencial para a conversão do código em um executável (.exe), permitindo a distribuição mais fácil e profissional do software, sem a necessidade de um ambiente de desenvolvimento específico.
   - **Credibilidade**: A inclusão do nome "Delean Mafra" e do copyright reforça a autenticidade e profissionalidade do projeto.
 
-```VSVersionInfo
+```python
 # UTF-8
 #
 # Para mais detalhes sobre o 'ffi' veja:
