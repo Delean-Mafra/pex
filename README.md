@@ -83,6 +83,48 @@ A implementação de um sistema de controle de versão utilizando o arquivo `ver
   - **Conversão para Executável**: A criação do arquivo de controle de versão é essencial para a conversão do código em um executável (.exe), permitindo a distribuição mais fácil e profissional do software, sem a necessidade de um ambiente de desenvolvimento específico.
   - **Credibilidade**: A inclusão do nome "Delean Mafra" e do copyright reforça a autenticidade e profissionalidade do projeto.
 
+```VSVersionInfo
+# UTF-8
+#
+# Para mais detalhes sobre o 'ffi' veja:
+# http://msdn.microsoft.com/en-us/library/ms646997.aspx
+
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(2, 0, 0, 0 ),
+    prodvers=(2, 0, 0, 0 ),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x4,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo(
+      [
+        StringTable(
+          '041604B0',
+          [
+            StringStruct('CompanyName', 'Delean Mafra'),
+            StringStruct('FileDescription', 'Exclui Arquivos Duplicados'),
+            StringStruct('FileVersion', '2.0.0.0'),
+            StringStruct('InternalName', 'Exclui Arquivos Duplicados'),
+            StringStruct('LegalCopyright', 'Copyright ©2024 | Delean Mafra, todos os direitos reservados.'),
+            StringStruct('OriginalFilename', 'Exclui Arquivos Duplicados.exe'),
+            StringStruct('ProductName', 'Exclui Arquivos Duplicados'),
+            StringStruct('ProductVersion', '2.0.0.2'),
+          ]
+        )
+      ]
+    ),
+    VarFileInfo([VarStruct('Translation', [1046, 1200])])
+  ]
+)
+
+```
+
+
 ### 5ª Parte do Projeto: Criação do Compilador em Python (`compilador.py`)
 
 Na quinta parte do projeto, foi desenvolvido um compilador em Python com o objetivo de transformar o código em um executável (.exe), utilizando as bibliotecas `pyinstaller` e `subprocess`. Esta etapa é fundamental para a distribuição do software, permitindo que ele seja executado no ambiente dos usuários sem a necessidade de um interpretador Python instalado.
