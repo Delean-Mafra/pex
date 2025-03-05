@@ -110,7 +110,7 @@ VSVersionInfo(
             StringStruct('FileDescription', 'Exclui Arquivos Duplicados'),
             StringStruct('FileVersion', '2.0.0.0'),
             StringStruct('InternalName', 'Exclui Arquivos Duplicados'),
-            StringStruct('LegalCopyright', 'Copyright ©2024 | Delean Mafra, todos os direitos reservados.'),
+            StringStruct('LegalCopyright', 'Copyright ©2024-2025 | Delean Mafra, todos os direitos reservados.'),
             StringStruct('OriginalFilename', 'Exclui Arquivos Duplicados.exe'),
             StringStruct('ProductName', 'Exclui Arquivos Duplicados'),
             StringStruct('ProductVersion', '2.0.0.2'),
