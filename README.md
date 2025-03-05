@@ -59,7 +59,7 @@ A implementação da biblioteca `Tkinter` no projeto permitiu criar uma interfac
 
 - **Credibilidade e Profissionalismo**:
   - **Aspecto Visual Agradável**: A interface gráfica proporciona um aspecto mais profissional ao projeto, aumentando a credibilidade do software perante os usuários.
-  - **Customização**: Elementos visuais, como labels e botões, foram personalizados para incluir informações de autoria, como "©2024 Delean Mafra - Todos os direitos reservados", conferindo autenticidade ao software.
+  - **Customização**: Elementos visuais, como labels e botões, foram personalizados para incluir informações de autoria, como "©2024-2025 Delean Mafra - Todos os direitos reservados", conferindo autenticidade ao software.
 
 - **Boas Práticas de Desenvolvimento**:
   - **Separação de Funções**: A criação de uma GUI (Graphical User Interface) permite uma separação clara entre a lógica do programa e a interface do usuário, tornando o código mais modular e fácil de manter.
@@ -294,7 +294,7 @@ def main():
     root.title("Exclusão de Arquivos Duplicados")
     root.geometry("400x200")
     
-    label_copyright = tk.Label(root, text="©2024 Delean Mafra - Todos os direitos reservados")
+    label_copyright = tk.Label(root, text="©2024-2025 Delean Mafra - Todos os direitos reservados")
     label_copyright.pack(pady=10)
     
     btn_executar = tk.Button(
