@@ -2,7 +2,7 @@
 
 ## Obs
 
-O nome do pastor e dos membros da igreja foram removidos para preservar suas identidades
+O nome do Bispo, pastor e dos membros da igreja foram removidos para preservar suas identidades
 
 ## Descrição do Projeto
 
