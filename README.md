@@ -384,6 +384,8 @@ Comprometi-me com a ética profissional e a responsabilidade social no desenvolv
   
 - [Roteiro do Projeto](https://descomplica2-my.sharepoint.com/:w:/g/personal/delean_2444070_aluno_faculdadedescomplica_com_br/EWoeghM5UuZOisuQEx7kSwgBEBSqqn5Dcw3UjtspIIJaAQ)
 
+Obs.: Apenas alunos e professores da Faculdade Descomplica conseguem acessar os links das documentações. Caso você não tenha uma conta educacional da Descomplica, os documentos ficarão indisponíveis ao tentar acessá-los.
+
 ## Conclusão
 
 A igreja passou a ter um software desenvolvido por mim que automatiza suas tarefas. O que antes levava de 6 a 8 horas para realizar, agora é feito em alguns minutos com o novo software desenvolvido e distribuído de forma gratuita por mim.
