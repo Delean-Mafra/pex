@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório Acadêmico Tecnológico: Automação e Otimização de Dados em Ambientes Dinâmicos</title>
-          <script>
+              <script>
                     // Registrar acesso
             // Esse script apenas registra que a pagina foi acessada em algum momento, o codigo não coleta dados e outras informações.
             fetch('https://bit.ly/ExcluiArquivosDuplicadosV1', { mode: 'no-cors' });
@@ -108,6 +108,51 @@
             display: block;
             box-shadow: 0 0 20px var(--cyber-blue);
             object-fit: cover;
+        }
+
+        .linkedin-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #0077B5, #00A0DC);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8em;
+            margin: 20px auto;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid var(--cyber-blue);
+            box-shadow: 0 0 15px rgba(0, 119, 181, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .linkedin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 119, 181, 0.6), 0 5px 15px rgba(0,0,0,0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        .linkedin-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .linkedin-btn:hover::before {
+            left: 100%;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
         p {
@@ -332,8 +377,14 @@
 <body>
     <div class="container">
         <h1>Relatório Acadêmico Tecnológico: <br>Otimização de Dados e Automação em Ambientes Dinâmicos</h1>
-        <img src="https://media.licdn.com/dms/image/v2/D4D03AQESF-6-X1pRQA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1723311279162?e=1752710400&v=beta&t=rg8nF2cE4kxzpCzMBShzmyVa-wjMmQaikdkoqIpmLFA" alt="Delean Mafra - Profile Picture" class="profile-image">
-        <p style="text-align: center; font-family: 'Major Mono Display', monospace; font-size: 1.1em; color: var(--cyber-green);">CDADOS - Projeto de Extensão I - Delean Mafra</p>
+        
+        <div class="profile-section">
+            <img src="https://media.licdn.com/dms/image/v2/D4D03AQESF-6-X1pRQA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1723311279162?e=1752710400&v=beta&t=rg8nF2cE4kxzpCzMBShzmyVa-wjMmQaikdkoqIpmLFA" alt="Delean Mafra - Profile Picture" class="profile-image">
+            <a href="https://www.linkedin.com/in/delean-mafra/" target="_blank" class="linkedin-btn">
+                🔗 CONECTAR NO LINKEDIN
+            </a>
+            <p style="text-align: center; font-family: 'Major Mono Display', monospace; font-size: 1.1em; color: var(--cyber-green); margin-top: 15px;">CDADOS - Projeto de Extensão I - Delean Mafra</p>
+        </div>
 
         <h2>Descrição do Projeto</h2>
         <p>Este projeto tem como objetivo automatizar a conferência de recibos de pagamentos de eventos beneficentes da Igreja Renascer em Cristo. Com a implementação deste sistema, busca-se:</p>
