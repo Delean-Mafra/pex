@@ -1,0 +1,7 @@
+=== Log de Exclusão de Arquivos ===
+Data e hora: 2025-08-17 18:09:04
+Pasta analisada: C:/Users/Acer/Downloads/Nova pasta
+
+Nenhum arquivo duplicado encontrado.
+
+=== Fim do Log ===
