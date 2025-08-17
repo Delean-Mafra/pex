@@ -1,126 +1,228 @@
-# Política de Privacidade
+# Política de Segurança e Privacidade / Security & Privacy Policy
 
-A Política de Privacidade descreve como coletamos, usamos, protegemos e compartilhamos informações durante o uso do projeto Automação da Conferência de Recibos de Pagamentos de Eventos, desenvolvido no contexto do Projeto de Extensão Universitária. Este projeto visa otimizar processos administrativos para a Igreja Cristã Apostólica Renascer em Cristo, com foco na automação da verificação de duplicidade de recibos de pagamentos de eventos.
+Projeto: CDADOS – Projeto de Extensão I – Exclusão de Arquivos Duplicados
+Versão Atual: **3.0.0.0** (migração da interface de Tkinter para Flask – operação local em navegador)
+Licença de Conteúdo / Documentação: **CC BY-NC-SA 4.0**
+Autor / Maintainer: **Delean Mafra (2024–2025)**
 
+---
+## 1. Escopo / Scope
+Este documento descreve a política de segurança, privacidade, suporte de versões e processo de reporte de vulnerabilidades do software. / This document outlines the security, privacy, supported versions and vulnerability reporting process of the software.
 
+---
+## 2. Versões Suportadas / Supported Versions
+| Versão | Suporte | Notas |
+|--------|---------|-------|
+| 3.0.0.3 | :white_check_mark: | Versão atual (UI Flask) |
+| 3.0.0.0 | :white_check_mark: | Suporte de transição limitado |
+| 2.0.0.47 | :warning: | Manutenção corretiva apenas (legacy Tkinter) |
+| < 2.0.0.0 | :x: | Sem suporte |
 
-## Versões suportadas
+Legenda: :white_check_mark: (ativo) · :warning: (parcial) · :x: (descontinuado)
 
-| Versões | Suportadas          |
-| ------- | ------------------ |
-| 2.0.0.2   | :white_check_mark: |
-| 1.0.0.47  | :x:                |
-| 2.0.0.0   | :white_check_mark: |
-| < 2.0.0.0  | :x:                |
+> Novos patches de segurança são aplicados prioritariamente à versão 3.x. Correções só são retroportadas para 2.0.0.2 se tecnicamente viáveis.
 
-## Coleta de Informações
+---
+## 3. Modelo de Execução Local / Local Execution Model
+- A aplicação é executada **localmente** em `localhost` (ex.: `http://127.0.0.1:5000/`).
+- Não envia dados a servidores externos.
+- Não realiza telemetria, coleta analítica ou rastreamento de uso.
+- O diálogo de seleção de pasta usa `tkinter.filedialog` apenas para obter um caminho local (não expõe o caminho para fora do host).
 
+---
+## 4. Dados Processados / Data Processed
+| Tipo | Origem | Retenção | Transmissão Externa |
+|------|--------|----------|---------------------|
+| Arquivos PDF / Imagem | Pasta escolhida | Não armazenados pelo app (somente leitura e possível exclusão de duplicados) | Nenhuma |
+| Hashes de Conteúdo | Gerados em memória | Volátil | Nenhuma |
+| Log de Exclusão (`log_exclusao.txt`) | Gerado localmente | Persistente local (texto) | Nenhuma |
+| Caminho da Pasta | Seleção do usuário | Volátil (exceto em mensagens de retorno) | Nenhuma |
 
-Este projeto não coleta informações pessoais dos usuários ou da organização, exceto para fins específicos de execução e otimização do software, caso haja necessidade de dados temporários ou acesso a arquivos para automação.
+### Observações
+- O arquivo de log contém nomes (paths) dos arquivos excluídos e timestamps. **Não** inclui conteúdo dos arquivos.
+- Não há envio de hashes, nomes de arquivos ou caminhos a terceiros.
 
-Durante a execução do projeto, os dados podem incluir:
+---
+## 5. Privacidade / Privacy
+### Português
+O software não coleta dados pessoais. Todo processamento ocorre no ambiente do usuário. É responsabilidade do operador garantir que a pasta selecionada não contenha arquivos sigilosos cuja exclusão acidental possa comprometer processos administrativos.
 
-Arquivos de Recibos: O software manipula recibos em formatos como PDF, PNG e JPEG, mas não armazena nem compartilha informações dos recibos ou dados financeiros fora do ambiente da organização.
-Dados Temporários: Durante o processo de conferência e verificação de duplicidade, dados temporários podem ser gerados no ambiente local, mas não são armazenados a longo prazo ou compartilhados.
+### English
+The software does not collect personal data. All processing occurs locally. It is the operator's responsibility to ensure the chosen folder does not contain confidential files whose accidental deletion could impact administrative processes.
 
+---
+## 6. Segurança Operacional / Operational Security
+| Medida / Measure | Descrição |
+|------------------|-----------|
+| Execução Local | Elimina dependência de rede para operação principal. |
+| Hash por Conteúdo | Reduz risco de falsos positivos ao comparar duplicados. |
+| Exclusão Imediata | Arquivo duplicado é removido após detecção; recomenda-se backup manual prévio. |
+| Log Centralizado | Rastreabilidade das exclusões para auditoria. |
+| Supressão de Reloader | Evita duplicação de processos (Flask `use_reloader=False`). |
+| Limitação de Escopo | Apenas extensões suportadas (PDF, PNG, JPEG). |
 
-## Uso de Dados
+### Recomendações ao Usuário
+1. Testar em uma cópia da pasta antes de usar em ambiente oficial.  
+2. Versionar ou arquivar dados críticos (backup incremental) antes de grandes exclusões.  
+3. Restringir acesso ao executável a usuários autorizados.  
+4. Se integrar em fluxo maior, adicionar controle de acesso (auth + TLS reverso, se exposto).  
 
-Os dados recolhidos, se houver, são utilizados exclusivamente para as seguintes finalidades:
+---
+## 7. Vetores de Risco Conhecidos / Known Risk Vectors
+| Vetor | Risco | Mitigação Recomendada |
+|-------|-------|-----------------------|
+| Exclusão Irreversível | Perda de arquivo que era referência adotada erroneamente como duplicado | Backup/quarentena antes de exclusão (futuro) |
+| PDF Sem Texto | Conteúdo igual baseado em imagem não detectado se OCR não aplicado | Integração futura com OCR (Tesseract) |
+| Execução em Rede Compartilhada | Delay ou condições de corrida em arquivos sendo usados por outros processos | Executar em janela de manutenção / lock de uso |
+| Modificação Durante Escaneamento | Hash inconsistente se arquivo alterado no meio do processo | Bloquear alterações (copiar para staging) em cenários críticos |
 
-Automação de Processos: Facilitar a conferência de duplicidade de recibos financeiros.
-Melhoria do Software: Ajustes e melhorias no sistema conforme feedback da organização.
-Execução de Tarefas Administrativas: Auxílio no controle de pagamentos e registros contábeis da organização.
+---
+## 8. Logs
+- Arquivo: `log_exclusao.txt`.
+- Conteúdo: timestamp, ação (EXCLUIDO / ERRO), caminho do arquivo.
+- Sensibilidade: Baixa (metadados). Pode revelar estrutura interna de diretórios — proteger em ambientes sensíveis.
 
+### Rotação (Sugestão)
+Implementar rotação manual ou script de arquivamento se o volume crescer. (Não implementado nativamente.)
 
-## Armazenamento de Dados
+---
+## 9. Dependências Críticas / Critical Dependencies
+| Pacote | Uso | Notas de Segurança |
+|--------|-----|--------------------|
+| Flask | Servidor local / rotas | Manter atualizado (corrige CVEs rapidamente). |
+| Pillow | Processar imagens | Preferir versões recentes (corrige parsing). |
+| PyPDF2 | Leitura de PDFs | PDFs malformados devem ser tratados com try/except. |
+| Tkinter | Diálogo de pasta | Uso mínimo; não expõe conteúdo além do caminho. |
 
-Os dados coletados não são armazenados fora da organização ou em servidores de terceiros, exceto para fins de teste e desenvolvimento local do sistema. Após a execução do projeto de extensão, os dados temporários são descartados de acordo com as práticas de segurança.
+> Recomenda-se verificação periódica de CVEs (ex.: `pip audit`).
 
-## Proteção de Dados
+---
+## 10. Construção & Integridade / Build & Integrity
+- Empacotamento via `PyInstaller` (`version_compilador.py`).
+- Suporte a assinatura de código (certificado `.pfx`).
+- Verificar hash do executável após distribuição quando a cadeia de confiança for crítica.
 
-O projeto implementa boas práticas de segurança para proteger os dados processados durante a execução, incluindo:
+### Cadeia de Confiança
+Se assinatura digital for aplicada, validar com:
+- `signtool verify /pa arquivo.exe` (Windows)  
+- ou ferramenta equivalente.
 
-Criptografia: Caso os dados financeiros sejam processados, eles serão criptografados durante a execução e não serão armazenados.
-Acesso Restrito: Apenas pessoas autorizadas terão acesso aos dados temporários ou arquivos relacionados ao projeto durante sua execução.
+---
+## 11. Reporte de Vulnerabilidades / Vulnerability Reporting
+Envie (em ordem de prioridade):
+1. Descrição clara do problema.
+2. Passos para reprodução.
+3. Impacto estimado.
+4. Ambiente (SO, versão do app, hash do executável).
 
+Canais sugeridos (exemplos – ajustar conforme divulgação real):
+- E-mail institucional do mantenedor.
+- Canal interno autorizado da organização.
 
-## Compartilhamento de Dados
+Tempo alvo de resposta inicial: **5 dias úteis**.
 
-Este projeto não compartilha nenhuma informação com terceiros, exceto se for exigido por lei ou para o desenvolvimento contínuo do software, com o consentimento explícito da organização envolvida.
+Divulgação responsável: Não publique detalhes antes de correção acordada.
 
-## Direitos do Usuário
+---
+## 12. Política de Atualizações / Update Policy
+- Versão 3.x recebe novas features + correções.
+- Versões 2.x: apenas correções críticas (quando simples e seguras).
+- Releases numeradas `MAJOR.MINOR.PATCH.BUILD`.
 
-Como usuário ou representante da organização, você tem os seguintes direitos:
+---
+## 13. Alterações Nesta Versão 3.0 (Resumo de Segurança)
+| Mudança | Impacto |
+|---------|---------|
+| Migração para Flask | Melhora flexibilidade e separação de camadas; atenção a exposição inadvertida (recomenda-se manter local). |
+| Remoção de `pex.lic` | Reduz superfície de dependências externas. |
+| Hash de Conteúdo Consolidado | Aumenta precisão na detecção; pequeno custo de CPU. |
+| Supressão de Reloader | Evita múltiplas threads acessando simultaneamente o mesmo diretório. |
+| Log Unificado | Auditoria simplificada. |
 
-Acesso e Correção: Você pode solicitar informações sobre os dados que o sistema processa e pedir correções, caso necessário.
-Exclusão de Dados: Após a conclusão do projeto, todos os dados temporários ou coletados serão excluídos, de acordo com as práticas de segurança e privacidade.
+---
+## 14. Futuras Melhorias de Segurança / Future Security Enhancements
+1. Modo "quarentena" em vez de exclusão imediata.
+2. OCR para PDFs baseados em imagem.
+3. Cache incremental de hashes com verificação de integridade.
+4. Assinatura reproduzível (reproducible builds) com manifesto de dependências fixadas.
+5. Endpoint opcional de status com token de acesso (se ampliado para rede interna).
 
-## Alterações na Política de Privacidade
+---
+## 15. Declaração de Isenção / Disclaimer
+O software é fornecido "no estado em que se encontra" para uso administrativo interno. Cabe ao operador validar se o conjunto de arquivos submetidos pode ser excluído de forma segura.
 
-Esta política pode ser atualizada periodicamente. Quaisquer mudanças substanciais serão anunciadas no repositório GitHub, onde o projeto está hospedado. Recomendamos revisar esta política regularmente para se manter informado sobre como estamos protegendo sua privacidade.
+---
+## 16. Direitos Autorais / Copyright
+© 2025 Delean Mafra – Todos os direitos reservados.  
+Documento e conteúdo sob licença **CC BY-NC-SA 4.0**.
 
-## Copyright
+---
+# English Section (Mirror)
 
-<p xmlns:cc="http://creativecommons.org/ns#" >CDADOS - Projeto de Extensão I - Excluir arquivos duplicados, está licenciado sob CC BY-NC-ND 4.0 © por Delean Mafra <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
+## 1. Scope
+This document defines security, privacy, supported versions, and vulnerability reporting process.
 
-# Privacy Policy
+## 2. Supported Versions
+| Version | Support | Notes |
+|---------|---------|-------|
+| 3.0.0.3 | :white_check_mark: | Current (Flask UI) |
+| 2.0.0.0 | :white_check_mark: | Transitional limited support |
+| 2.0.0.47 | :warning: | Security fixes only if trivial |
+| < 2.0.0.0 | :x: | Unsupported |
 
-The Privacy Policy describes how we collect, use, protect, and share information during the use of the project Automation of Receipt Payment Verification, developed in the context of the University Extension Project. This project aims to optimize administrative processes for the Igreja Cristã Apostólica Renascer em Cristo, focusing on the automation of verifying the duplication of event payment receipts.
+## 3. Local Execution Model
+Runs only on localhost; no external telemetry; no uploads.
 
-## Supported Versions
+## 4. Data Processed
+- Reads PDF / image files, computes hashes in memory.
+- Deletes confirmed duplicates immediately.
+- Writes a local text log with filenames only.
 
+## 5. Privacy
+No personal data intentionally collected. All operations stay on the local machine.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 2.0.0.2   | :white_check_mark: |
-| 1.0.0.47  | :x:                |
-| 2.0.0.0   | :white_check_mark: |
-| < 2.0.0.0  | :x:                |
+## 6. Operational Security
+- Content hashing (PDF text, normalized image bytes).
+- Single-process (reloader disabled).
+- Optional code signing for integrity.
 
-## Information Collection
+## 7. Known Risks
+| Vector | Risk | Mitigation |
+|--------|------|-----------|
+| Immediate deletion | Loss of needed file | Add quarantine (future) |
+| Image-only PDFs | Undetected duplicates | OCR enhancement (future) |
+| Concurrent edits | Inconsistent hash | Run during maintenance window |
 
-This project does not collect personal information from users or the organization, except for specific purposes of software execution and optimization, should temporary data or file access be required for automation.
+## 8. Logging
+`log_exclusao.txt` – local only; contains filenames; treat as low-sensitivity metadata.
 
-During the execution of the project, data may include:
+## 9. Dependencies
+Keep Flask, Pillow, PyPDF2 updated; audit regularly (`pip audit`).
 
-Receipt Files: The software handles receipts in formats such as PDF, PNG, and JPEG, but does not store or share receipt information or financial data outside the organization's environment.
-Temporary Data: During the verification and duplication checking process, temporary data may be generated locally but is not stored long-term or shared.
+## 10. Build & Integrity
+Packaged via PyInstaller; optional code signing; verify signature/hash after distribution.
 
-## Data Usage
+## 11. Vulnerability Reporting
+Provide steps, impact, environment details. Private disclosure first. Target initial response within 5 business days.
 
-The collected data, if any, is used exclusively for the following purposes:
+## 12. Update Policy
+3.x = features + fixes; 2.x = critical fixes only; semantic versioning with 4 fields.
 
-Process Automation: Facilitate the verification of duplicate financial receipts.
-Software Improvement: Adjustments and improvements to the system based on organizational feedback.
-Execution of Administrative Tasks: Assistance in controlling payments and accounting records of the organization.
+## 13. 3.0 Security Changes Summary
+- Migrated to Flask (flexibility, modularity)
+- Removed external license file dependency
+- Unified robust content hashing
+- Disabled auto reloader
+- Centralized logging
 
-## Data Storage
+## 14. Future Security Enhancements
+Quarantine mode; OCR for image-only PDFs; incremental hash cache; reproducible builds; optional auth-protected status endpoint.
 
-The collected data is not stored outside the organization or on third-party servers, except for local system testing and development purposes. After the extension project execution, temporary data is discarded according to security practices.
+## 15. Disclaimer
+Provided as-is for internal administrative use. Operator responsible for validating safe deletion.
 
-## Data Protection
+## 16. Copyright
+© 2025 Delean Mafra – All rights reserved. CC BY-NC-SA 4.0.
 
-The project implements good security practices to protect the data processed during execution, including:
-
-Encryption: Should financial data be processed, it will be encrypted during execution and not stored.
-Restricted Access: Only authorized personnel will have access to temporary data or files related to the project during its execution.
-
-## Data Sharing
-
-This project does not share any information with third parties, except as required by law or for the continuous development of the software, with the explicit consent of the involved organization.
-
-## User Rights
-
-As a user or representative of the organization, you have the following rights:
-
-Access and Correction: You can request information about the data processed by the system and request corrections if necessary.
-Data Deletion: After the conclusion of the project, all temporary or collected data will be deleted according to security and privacy practices.
-
-## Changes to the Privacy Policy
-
-This policy may be updated periodically. Any substantial changes will be announced in the GitHub repository where the project is hosted. We recommend reviewing this policy regularly to stay informed about how we are protecting your privacy.
-
-## Copyright 
-
-<p xmlns:cc="http://creativecommons.org/ns#" >CDADOS - Extension Project I - Delete Duplicate Files, is licensed under CC BY-NC-ND 4.0 © by Delean Mafra <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
+---
+**Fim / End**
