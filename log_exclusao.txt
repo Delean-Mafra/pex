@@ -1,7 +1,7 @@
 === Log de Exclusão de Arquivos ===
-Data e hora: 2025-08-17 18:09:04
-Pasta analisada: C:/Users/Acer/Downloads/Nova pasta
+Data e hora: 2025-10-01 00:43:50
+Pasta analisada: C:\Users\Acer\test_duplicates
 
-Nenhum arquivo duplicado encontrado.
+Erro: Falha ao calcular hash para test.pdf. Arquivo ignorado.
 
 === Fim do Log ===
