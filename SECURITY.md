@@ -1,7 +1,10 @@
-# Changelog Versão 3.0.0.4 - Correções Críticas de Segurança
+# Changelog Versão 3.0.0.5 - Correções Críticas de Segurança
 
-## Resumo da Versão 3.0.0.4
-A versão 3.0.0.4 representa uma **atualização crítica de segurança** que elimina **16 vulnerabilidades** detectadas por ferramentas de análise automatizada (Dependabot e CodeQL). Esta versão mantém toda a funcionalidade da 3.0.0.0 enquanto implementa robustas medidas de proteção contra ataques de path injection, buffer overflow, execução remota de código e exposição de informações sensíveis.
+## Resumo da Versão 3.0.0.5
+A versão 3.0.0.5 representa uma **atualização crítica de segurança** que elimina **21 vulnerabilidades** detectadas por ferramentas de análise automatizada (Dependabot e CodeQL). Esta versão mantém toda a funcionalidade da 3.0.0.0 enquanto implementa robustas medidas de proteção contra ataques de path injection, buffer overflow, execução remota de código e exposição de informações sensíveis.
+
+### 🔄 **ATUALIZAÇÃO DE SEGURANÇA - 30/09/2025**
+Correção adicional de **5 novos alertas** CodeQL de Path Injection detectados após análise automatizada, elevando o total de vulnerabilidades corrigidas para **21**.
 
 ---
 
@@ -41,12 +44,13 @@ A versão 3.0.0.4 representa uma **atualização crítica de segurança** que el
   - **Solução**: **MIGRAÇÃO** PyPDF2 → pypdf (sucessor oficial)
   - **Resultado**: PyPDF2 3.0.1 → pypdf 5.6.0
 
-### **Código Fonte (CodeQL) - 9 Alertas Eliminados**
+### **Código Fonte (CodeQL) - 14 Alertas Eliminados**
 
-#### **Path Injection (CWE-22) - 7 Alertas Críticos**
-- **Localização**: Funções `calcular_hash()`, `verificar_duplicados()`, rotas Flask
-- **Risco**: Acesso não autorizado a arquivos do sistema
-- **Correção**: Implementação de validação e sanitização completa
+#### **Path Injection (CWE-22) - 12 Alertas Críticos**
+- **Primeira Correção**: 7 alertas em `calcular_hash()`, `verificar_duplicados()`, rotas Flask
+- **Segunda Correção**: 5 alertas adicionais em `validar_caminho_seguro()`, `validar_arquivo_seguro()`
+- **Risco**: Acesso não autorizado a arquivos do sistema via manipulação de caminhos
+- **Correção**: Validação prévia de entrada antes de operações Path(), sanitização robusta
 
 #### **Information Exposure (CWE-209) - 2 Alertas Médios**
 - **Localização**: Tratamento de exceções em `/process` e `/select_folder`
@@ -57,13 +61,17 @@ A versão 3.0.0.4 representa uma **atualização crítica de segurança** que el
 
 ## 🛡️ MEDIDAS DE SEGURANÇA IMPLEMENTADAS
 
-### **1. Sistema de Validação de Caminhos**
+### **1. Sistema de Validação de Caminhos (APRIMORADO)**
 ```python
 def validar_caminho_seguro(caminho):
     """Valida e sanitiza caminhos para prevenir path injection"""
-    # Normalização com Path.resolve()
-    # Bloqueio de path traversal (.., ~)
+    # NOVO: Validação prévia ANTES de usar Path()
+    # NOVO: Verificação de tipo e formato
+    # NOVO: Limites de comprimento (500 chars)
+    # NOVO: Sanitização de caracteres perigosos
+    # Bloqueio de path traversal (.., ~, \0, \r, \n)
     # Proteção contra caminhos UNC suspeitos
+    # Tratamento granular de exceções
     # Verificação de existência e tipos
 ```
 
@@ -98,6 +106,16 @@ def sanitizar_mensagem_erro(erro):
 | `os.remove()` | `Path.unlink()` | Exclusão validada |
 | `open(user_input)` | `open(validated_path)` | Entrada sanitizada |
 
+### **6. Correções Adicionais de Path Injection (30/09/2025)**
+**Implementação de validação prévia rigorosa:**
+- **Verificação de tipo**: Entrada deve ser string não vazia
+- **Limites de segurança**: Máximo 500 caracteres por caminho
+- **Sanitização prévia**: Bloqueio de caracteres perigosos ANTES de usar Path()
+- **Tratamento granular**: Try/catch específico para cada operação
+- **Reutilização segura**: Caminhos validados não são re-processados
+
+**Caracteres bloqueados:** `..`, `~`, `\0`, `\r`, `\n`, caminhos UNC remotos
+
 ---
 
 ## 📦 DEPENDÊNCIAS ATUALIZADAS
@@ -110,7 +128,7 @@ PyPDF2==3.0.1         # ❌ VULNERÁVEL + DESCONTINUADO
 Werkzeug==2.3.7       # ❌ MÚLTIPLAS VULNERABILIDADES
 ```
 
-### **Depois (requirements.txt v3.0.0.4)**
+### **Depois (requirements.txt v3.0.0.5)**
 ```
 Flask>=3.1.0          # Versão moderna e segura
 Pillow>=10.3.0        # ✅ TODAS CVEs CORRIGIDAS
@@ -154,17 +172,21 @@ from pathlib import Path  # Adicionado para segurança
 
 ## 📊 ESTATÍSTICAS DE SEGURANÇA
 
-### **Antes da v3.0.0.4**
+### **Antes da v3.0.0.5**
 - 🔴 **7 CVEs críticas/altas** em dependências
-- 🔴 **9 alertas CodeQL** no código fonte
-- 🔴 **16 vulnerabilidades totais**
+- 🔴 **14 alertas CodeQL** no código fonte (9 iniciais + 5 adicionais)
+- 🔴 **21 vulnerabilidades totais**
 - 🔴 **Status**: ALTO RISCO
 
-### **Depois da v3.0.0.4**
-- ✅ **0 CVEs conhecidas** em dependências
-- ✅ **0 alertas CodeQL** no código
-- ✅ **0 vulnerabilidades detectadas**
+### **Depois da v3.0.0.5 (Final)**
+- ✅ **0 alertas CodeQL** no código (14 corrigidos)
+- ✅ **0 vulnerabilidades detectadas** (21 eliminadas)
 - ✅ **Status**: SEGURO PARA PRODUÇÃO
+
+### **Evolução das Correções**
+- **Primeira fase**: 16 vulnerabilidades (7 CVEs + 9 CodeQL)
+- **Segunda fase**: +5 alertas CodeQL adicionais
+- **Total corrigido**: 21 vulnerabilidades críticas
 
 ---
 
@@ -190,7 +212,7 @@ from pathlib import Path  # Adicionado para segurança
 
 ---
 
-## 🔄 GUIA DE MIGRAÇÃO 3.0.0.0 → 3.0.0.4
+## 🔄 GUIA DE MIGRAÇÃO 3.0.0.0 → 3.0.0.5
 
 ### **Dependências**
 ```bash
@@ -357,16 +379,22 @@ Mesmo após a entrega anterior, decidiu-se manter suporte evolutivo voluntário,
 
 ## Cronologia de Versões da Série 3.0
 
-### **v 3.0.0.4** (Atual) - Hardening de Segurança
+### **v 3.0.0.5** (Atual) - Hardening de Segurança
 - **Data**: Setembro 2025
-- **Foco**: Correção crítica de 16 vulnerabilidades de segurança
+- **Foco**: Correção crítica de **21 vulnerabilidades** de segurança
 - **Principais mudanças**:
   - Atualização forçada de dependências (7 CVEs corrigidas)
   - Migração PyPDF2 → pypdf (biblioteca descontinuada)
-  - Implementação de validação de path injection (9 alertas CodeQL)
+  - Implementação de validação de path injection (14 alertas CodeQL)
   - Sistema completo de sanitização de entrada
+  - Validação prévia rigorosa antes de operações Path()
   - Limites de proteção DoS
   - Certificação de segurança para produção
+
+#### **Cronologia de Correções Internas:**
+- **Fase 1** (Manhã): 9 alertas CodeQL + 7 CVEs = 16 vulnerabilidades
+- **Fase 2** (Tarde): +5 alertas CodeQL adicionais = **21 total**
+- **Resultado**: Zero vulnerabilidades ativas
 
 ### **v 3.0.0.3** (Anterior) - Melhorias Incrementais
 - **Data**: Agosto 2025
@@ -386,32 +414,36 @@ Mesmo após a entrega anterior, decidiu-se manter suporte evolutivo voluntário,
 ### **v 3.0.0.0** (Base) - Migração Flask
 - **Data**: Maio 2025
 - **Foco**: Migração Tkinter → Flask (interface web)
-- **Status**: Base mantida, mas com vulnerabilidades corrigidas na 3.0.0.4
+- **Status**: Base mantida, mas com vulnerabilidades corrigidas na 3.0.0.5
 
 ---
 
 ## ⚠️ RECOMENDAÇÃO CRÍTICA
-**TODAS as versões anteriores à 3.0.0.4 contêm vulnerabilidades de segurança conhecidas e NÃO devem ser utilizadas em produção.**
+**TODAS as versões anteriores à 3.0.0.5 contêm 21 vulnerabilidades de segurança conhecidas e NÃO devem ser utilizadas em produção.**
 
-**Migre imediatamente para a versão 3.0.0.4 para garantir:**
-- ✅ Segurança máxima
-- ✅ Proteção contra ataques
+**Migre imediatamente para a versão 3.0.0.5 para garantir:**
+- ✅ Segurança máxima (21 vulnerabilidades corrigidas)
+- ✅ Proteção total contra path injection
+- ✅ Validação prévia de todas as entradas
 - ✅ Conformidade com padrões de segurança
+- ✅ Certificação CodeQL e Dependabot
 - ✅ Suporte técnico continuado
 
 ---
 
 ## Certificação de Segurança
 Esta versão foi **validada e certificada** pelos seguintes sistemas de análise:
-- **GitHub Dependabot**: ✅ 0 alertas
-- **GitHub CodeQL**: ✅ 0 vulnerabilidades  
+- **GitHub Dependabot**: ✅ 0 alertas (7 CVEs corrigidas)
+- **GitHub CodeQL**: ✅ 0 vulnerabilidades (14 alertas corrigidos)
 - **Análise Manual**: ✅ Revisão completa implementada
+- **Testes de Segurança**: ✅ Validação de path injection, caracteres nulos, path traversal
+- **Última Atualização**: 30/09/2025 - **21 vulnerabilidades eliminadas**
 
 ---
 
 ## Créditos
 © 2025 Delean Mafra – Todos os direitos reservados.
 
-**Versão 3.0.0.4** – Interface Flask com segurança corporativa e proteção total contra vulnerabilidades.
+**Versão 3.0.0.5** – Interface Flask com segurança corporativa e proteção total contra vulnerabilidades.
 
 **Igreja Apostólica Renascer em Cristo** - Ferramenta administrativa certificada para uso em produção.

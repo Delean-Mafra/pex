@@ -29,34 +29,52 @@ def validar_caminho_seguro(caminho):
         tuple: (bool, str) - (é_seguro, caminho_normalizado)
     """
     try:
-        # Converter para Path object para normalização segura
-        caminho_path = Path(caminho).resolve()
+        # Validações preliminares ANTES de usar Path()
+        if not isinstance(caminho, str) or not caminho.strip():
+            return False, "Caminho deve ser uma string não vazia"
+            
+        # Verificar comprimento máximo
+        if len(caminho) > 500:
+            return False, "Caminho muito longo"
+            
+        # Bloquear caracteres perigosos ANTES de usar Path()
+        caracteres_perigosos = ['..', '~', '\0', '\r', '\n']
+        for char in caracteres_perigosos:
+            if char in caminho:
+                return False, "Caminho contém sequências não permitidas"
         
-        # Verificar se o caminho existe
-        if not caminho_path.exists():
-            return False, "Caminho não existe"
-            
-        # Verificar se é um diretório
-        if not caminho_path.is_dir():
-            return False, "Caminho deve ser um diretório"
-            
-        # Verificar se não contém caracteres perigosos ou sequências de escape
-        caminho_str = str(caminho_path)
-        
-        # Bloquear tentativas de path traversal
-        if '..' in caminho or '~' in caminho:
-            return False, "Caminho contém sequências não permitidas"
-            
-        # No Windows, verificar caminhos UNC suspeitos
-        if os.name == 'nt' and caminho_str.startswith('\\\\'):
-            # Permitir apenas caminhos UNC locais seguros
-            if not caminho_str.startswith('\\\\localhost\\') and not caminho_str.startswith('\\\\127.0.0.1\\'):
+        # No Windows, bloquear caminhos UNC remotos ANTES de usar Path()
+        if os.name == 'nt':
+            if caminho.startswith('\\\\') and not (
+                caminho.startswith('\\\\localhost\\') or 
+                caminho.startswith('\\\\127.0.0.1\\')
+            ):
                 return False, "Caminhos UNC remotos não são permitidos"
         
-        return True, caminho_str
+        # Agora é seguro usar Path() com dados pré-validados
+        try:
+            caminho_path = Path(caminho).resolve()
+        except (OSError, ValueError) as path_error:
+            return False, "Formato de caminho inválido"
         
-    except (OSError, ValueError, RuntimeError) as e:
-        return False, "Caminho inválido"
+        # Verificar se o caminho existe
+        try:
+            if not caminho_path.exists():
+                return False, "Caminho não existe"
+        except (OSError, PermissionError):
+            return False, "Acesso negado ao caminho"
+            
+        # Verificar se é um diretório
+        try:
+            if not caminho_path.is_dir():
+                return False, "Caminho deve ser um diretório"
+        except (OSError, PermissionError):
+            return False, "Não foi possível verificar se é diretório"
+        
+        return True, str(caminho_path)
+        
+    except Exception as e:
+        return False, "Erro na validação do caminho"
 
 def validar_arquivo_seguro(caminho_arquivo, pasta_base):
     """
@@ -70,8 +88,28 @@ def validar_arquivo_seguro(caminho_arquivo, pasta_base):
         tuple: (bool, str) - (é_seguro, motivo)
     """
     try:
-        arquivo_path = Path(caminho_arquivo).resolve()
-        base_path = Path(pasta_base).resolve()
+        # Validar entradas ANTES de usar Path()
+        if not isinstance(caminho_arquivo, str) or not caminho_arquivo.strip():
+            return False, "Caminho do arquivo inválido"
+        
+        if not isinstance(pasta_base, str) or not pasta_base.strip():
+            return False, "Pasta base inválida"
+        
+        # Verificar caracteres perigosos ANTES de usar Path()
+        for caminho in [caminho_arquivo, pasta_base]:
+            if any(char in caminho for char in ['..', '~', '\0', '\r', '\n']):
+                return False, "Caminho contém sequências não permitidas"
+        
+        # Agora é seguro usar Path() com dados validados
+        try:
+            arquivo_path = Path(caminho_arquivo).resolve()
+        except (OSError, ValueError):
+            return False, "Formato de caminho de arquivo inválido"
+            
+        try:
+            base_path = Path(pasta_base).resolve()
+        except (OSError, ValueError):
+            return False, "Formato de pasta base inválido"
         
         # Verificar se o arquivo está dentro da pasta base
         if not str(arquivo_path).startswith(str(base_path)):
@@ -495,8 +533,9 @@ def verificar_duplicados(caminho_pasta):
     max_arquivos = 10000  # Limite para prevenir DoS
     
     try:
-        # Usar Path para navegação segura
-        pasta_base = Path(caminho_seguro).resolve()
+        # O caminho_seguro já foi validado pela função validar_caminho_seguro()
+        # Portanto é seguro usar aqui
+        pasta_base = Path(caminho_seguro)
         
         for arquivo_path in pasta_base.rglob('*'):
             # Verificar limite de arquivos processados
