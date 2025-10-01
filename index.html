@@ -809,6 +809,175 @@ f<!DOCTYPE html>
         <p>Foi realizado acompanhamento e validação do funcionamento do programa. Foi coletada assinatura do responsável da organização.</p>
         <p>Observação: Projeto disponível no github: <a href="https://github.com/Delean-Mafra/pex" target="_blank" style="color: var(--cyber-blue); text-decoration: none;">https://github.com/Delean-Mafra/pex</a></p>
 
+        <h2>EVOLUÇÃO PARA VERSÃO 3.0: Aprimoramento Solicitado pela Igreja Renascer</h2>
+        
+        <h3>8ª Parte: Solicitação de Aprimoramento (Advanced Partnership Development)</h3>
+        <p>Após a conclusão bem-sucedida do projeto inicial, a <strong>Igreja Renascer em Cristo</strong> entrou em contato solicitando aprimoramentos no sistema de exclusão de arquivos duplicados. O feedback positivo da versão 2.0 e a confiança estabelecida pela parceria anterior motivaram a organização a solicitar uma versão ainda mais avançada e funcional.</p>
+        
+        <h3>Análise das Necessidades para a Versão 3.0 (Requirements Engineering)</h3>
+        <p>Durante as reuniões de levantamento de requisitos com a equipe da Igreja Renascer, foram identificadas as seguintes necessidades:</p>
+        <ul>
+            <li><strong>Interface Mais Amigável:</strong> A interface Tkinter, embora funcional, apresentava limitações estéticas e de usabilidade para usuários menos experientes.</li>
+            <li><strong>Maior Flexibilidade:</strong> Necessidade de eliminar a dependência do arquivo de configuração "pex.lic" para tornar o sistema mais autônomo.</li>
+            <li><strong>Melhor Feedback Visual:</strong> Solicitação de uma interface que fornecesse feedback em tempo real e informações mais detalhadas sobre o processo.</li>
+            <li><strong>Acessibilidade Aprimorada:</strong> Interface que pudesse ser executada através do navegador para facilitar o uso por diferentes usuários.</li>
+            <li><strong>Sistema de Logs Aprimorado:</strong> Relatórios mais detalhados e organizados sobre as operações realizadas.</li>
+        </ul>
+
+        <h3>Desenvolvimento da Versão 3.0: Interface Web Avançada (Flask-Based Architecture)</h3>
+        <p>A versão 3.0 representa uma completa reformulação arquitetural do sistema, mantendo a robustez da lógica de detecção de duplicados enquanto introduz uma interface web moderna e intuitiva:</p>
+
+        <div class="code-block">
+<pre><span class="comment"># Principais mudanças arquiteturais na versão 3.0</span>
+<span class="comment">from flask import Flask, render_template_string, request, jsonify</span>
+<span class="comment">from PIL import Image</span>
+<span class="comment">from PyPDF2 import PdfReader</span>
+
+<span class="keyword">app</span> = <span class="function">Flask</span>(<span class="string">__name__</span>)
+
+<span class="comment"># Interface HTML embutida com Tailwind CSS</span>
+<span class="string">INDEX_HTML</span> = <span class="string">"""
+&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+    &lt;title&gt;Exclusão de Arquivos Duplicados v3.0&lt;/title&gt;
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-gray-100"&gt;
+    &lt;div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg"&gt;
+        &lt;!-- Interface web responsiva --&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"""</span>
+
+<span class="keyword">def</span> <span class="function">calcular_hash</span>(<span class="string">arquivo</span>):
+    <span class="comment">"""Detecção inteligente de duplicados baseada no conteúdo"""</span>
+    <span class="keyword">if</span> <span class="string">arquivo</span>.<span class="string">lower</span>().<span class="string">endswith</span>((<span class="string">'.png'</span>, <span class="string">'.jpeg'</span>, <span class="string">'.jpg'</span>)):
+        <span class="comment"># Para imagens: normalização e hash do conteúdo visual</span>
+        <span class="string">img</span> = <span class="string">Image</span>.<span class="string">open</span>(<span class="string">arquivo</span>)
+        <span class="comment"># Hash baseado no conteúdo visual, não metadados</span>
+    <span class="keyword">elif</span> <span class="string">arquivo</span>.<span class="string">lower</span>().<span class="string">endswith</span>(<span class="string">'.pdf'</span>):
+        <span class="comment"># Para PDFs: extração de texto e hash do conteúdo</span>
+        <span class="string">pdf</span> = <span class="string">PdfReader</span>(<span class="string">arquivo</span>)
+        <span class="comment"># Hash baseado no texto extraído</span>
+</pre>
+        </div>
+
+        <h3>Comparativo Detalhado: Versão 2.0 vs 3.0</h3>
+        <div style="overflow-x: auto; margin: 20px 0;">
+            <table style="width: 100%; border-collapse: collapse; background-color: var(--medium-bg); border-radius: 8px; overflow: hidden;">
+                <thead>
+                    <tr style="background-color: var(--cyber-blue); color: var(--dark-bg);">
+                        <th style="padding: 12px; text-align: left; font-weight: bold;">Aspecto</th>
+                        <th style="padding: 12px; text-align: left; font-weight: bold;">Versão 2.0 (Tkinter)</th>
+                        <th style="padding: 12px; text-align: left; font-weight: bold;">Versão 3.0 (Flask/Web)</th>
+                        <th style="padding: 12px; text-align: left; font-weight: bold;">Benefícios</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--cyber-purple);">
+                        <td style="padding: 10px; color: var(--cyber-green); font-weight: bold;">Interface</td>
+                        <td style="padding: 10px; color: var(--light-text);">Desktop nativa (Tkinter)</td>
+                        <td style="padding: 10px; color: var(--light-text);">Web responsiva (HTML + CSS)</td>
+                        <td style="padding: 10px; color: var(--light-text);">Maior compatibilidade e usabilidade</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--cyber-purple);">
+                        <td style="padding: 10px; color: var(--cyber-green); font-weight: bold;">Configuração</td>
+                        <td style="padding: 10px; color: var(--light-text);">Arquivo pex.lic obrigatório</td>
+                        <td style="padding: 10px; color: var(--light-text);">Seleção dinâmica de pasta</td>
+                        <td style="padding: 10px; color: var(--light-text);">Eliminação de dependências externas</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--cyber-purple);">
+                        <td style="padding: 10px; color: var(--cyber-green); font-weight: bold;">Seleção de Arquivos</td>
+                        <td style="padding: 10px; color: var(--light-text);">Caminho fixo pré-configurado</td>
+                        <td style="padding: 10px; color: var(--light-text);">Botão "Selecionar Pasta" + entrada manual</td>
+                        <td style="padding: 10px; color: var(--light-text);">Flexibilidade total na escolha</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--cyber-purple);">
+                        <td style="padding: 10px; color: var(--cyber-green); font-weight: bold;">Feedback</td>
+                        <td style="padding: 10px; color: var(--light-text);">Caixa de diálogo simples</td>
+                        <td style="padding: 10px; color: var(--light-text);">Interface dinâmica com loading</td>
+                        <td style="padding: 10px; color: var(--light-text);">Melhor experiência do usuário</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--cyber-purple);">
+                        <td style="padding: 10px; color: var(--cyber-green); font-weight: bold;">Sistema de Logs</td>
+                        <td style="padding: 10px; color: var(--light-text);">Arquivo de texto básico</td>
+                        <td style="padding: 10px; color: var(--light-text);">Log detalhado com timestamp</td>
+                        <td style="padding: 10px; color: var(--light-text);">Rastreabilidade aprimorada</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--cyber-purple);">
+                        <td style="padding: 10px; color: var(--cyber-green); font-weight: bold;">Detecção de Duplicados</td>
+                        <td style="padding: 10px; color: var(--light-text);">Hash SHA-256 básico</td>
+                        <td style="padding: 10px; color: var(--light-text);">Hash inteligente por tipo de arquivo</td>
+                        <td style="padding: 10px; color: var(--light-text);">Maior precisão na detecção</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--cyber-purple);">
+                        <td style="padding: 10px; color: var(--cyber-green); font-weight: bold;">Compilação</td>
+                        <td style="padding: 10px; color: var(--light-text);">PyInstaller simples</td>
+                        <td style="padding: 10px; color: var(--light-text);">Script automatizado + assinatura digital</td>
+                        <td style="padding: 10px; color: var(--light-text);">Distribuição profissional e segura</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; color: var(--cyber-green); font-weight: bold;">Direitos Autorais</td>
+                        <td style="padding: 10px; color: var(--light-text);">Texto estático local</td>
+                        <td style="padding: 10px; color: var(--light-text);">Iframe para página oficial</td>
+                        <td style="padding: 10px; color: var(--light-text);">Informações sempre atualizadas</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Principais Inovações da Versão 3.0 (Advanced Features)</h3>
+        <ul>
+            <li><strong>Interface Web Responsiva:</strong>
+                <ul>
+                    <li>Utilização do framework Tailwind CSS para design moderno e responsivo</li>
+                    <li>Interface que se adapta a diferentes tamanhos de tela e dispositivos</li>
+                    <li>Navegação por abas para organizar funcionalidades e informações legais</li>
+                </ul>
+            </li>
+            <li><strong>Sistema de Detecção Inteligente:</strong>
+                <ul>
+                    <li>Para imagens (PNG/JPEG): Hash baseado no conteúdo visual normalizado, ignorando metadados</li>
+                    <li>Para PDFs: Extração de texto de todas as páginas e hash do conteúdo textual</li>
+                    <li>Fallback para hash completo do arquivo em casos de erro na análise específica</li>
+                </ul>
+            </li>
+            <li><strong>Flexibilidade de Uso:</strong>
+                <ul>
+                    <li>Eliminação da dependência do arquivo "pex.lic"</li>
+                    <li>Seleção de pasta através de diálogo nativo (Tkinter) integrado à interface web</li>
+                    <li>Possibilidade de digitação manual do caminho da pasta</li>
+                </ul>
+            </li>
+            <li><strong>Sistema de Compilação Avançado:</strong>
+                <ul>
+                    <li>Script automatizado que incrementa versões e limpa arquivos antigos</li>
+                    <li>Suporte à assinatura digital com certificados code-signing</li>
+                    <li>Otimizações de empacotamento com exclusão de módulos desnecessários</li>
+                </ul>
+            </li>
+            <li><strong>Melhorias na Experiência do Usuário:</strong>
+                <ul>
+                    <li>Feedback visual em tempo real durante o processamento</li>
+                    <li>Mensagens de erro e sucesso mais informativas</li>
+                    <li>Sistema de logs com timestamp e informações detalhadas</li>
+                    <li>Interface que abre automaticamente no navegador padrão</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Impacto Técnico e Operacional da Versão 3.0</h3>
+        <p>A evolução para a versão 3.0 trouxe melhorias significativas para a operação da Igreja Renascer:</p>
+        <ul>
+            <li><strong>Redução do Tempo de Treinamento:</strong> A interface web intuitiva eliminou a necessidade de treinamento específico para novos usuários.</li>
+            <li><strong>Maior Autonomia:</strong> Sem a dependência do arquivo de configuração, qualquer usuário pode operar o sistema independentemente.</li>
+            <li><strong>Confiabilidade Aprimorada:</strong> O sistema de detecção inteligente reduz falsos positivos e negativos.</li>
+            <li><strong>Rastreabilidade Completa:</strong> Logs detalhados permitem auditoria completa das operações realizadas.</li>
+            <li><strong>Distribuição Segura:</strong> Assinatura digital garante autenticidade e confiança no software distribuído.</li>
+        </ul>
+
         <h2>O QUE REALIZEI: Ciclo de Desenvolvimento Iterativo</h2>
         <ul>
             <li><strong>Início do Projeto:</strong> Iniciei o projeto preenchendo a “CARTA DE APRESENTAÇÃO”. Escolhi a organização IGREJA CRISTÃ APOSTÓLICA RENASCER EM CRISTO (nome fantasia: Igreja Apostólica Renascer em Cristo) para visitar e me apresentar. Após a autorização da organização, com o preenchimento do “TERMO DE AUTORIZAÇÃO PARA REALIZAÇÃO DAS ATIVIDADES EXTENSIONISTAS”, iniciei o projeto.</li>
@@ -881,8 +1050,70 @@ f<!DOCTYPE html>
             </li>
         </ul>
 
-        <h2>CONCLUSÃO: Impacto do Projeto</h2>
+        <h2>CONCLUSÃO: Impacto e Evolução Contínua do Projeto</h2>
+        
+        <h3>Impacto da Versão 2.0 (Projeto Original)</h3>
         <p>A igreja passou a ter um software desenvolvido por mim que automatiza suas tarefas, o que antes eles levavam de 6 a 8 horas para realizar agora realizam em alguns minutos com o novo software desenvolvido e distribuído de forma gratuita por mim.</p>
+
+        <h3>Evolução para a Versão 3.0: Parceria Continuada</h3>
+        <p>O sucesso da implementação inicial estabeleceu uma relação de confiança entre mim e a <strong>Igreja Renascer em Cristo</strong>. Após meses de uso eficiente da versão 2.0, a organização me contatou solicitando aprimoramentos no sistema. Este pedido demonstra:</p>
+        
+        <ul>
+            <li><strong>Validação da Solução:</strong> O software não apenas atendeu às expectativas, mas superou-as, tornando-se uma ferramenta essencial no dia a dia da organização.</li>
+            <li><strong>Confiança Técnica:</strong> A qualidade do trabalho desenvolvido motivou a igreja a solicitar uma versão ainda mais avançada.</li>
+            <li><strong>Impacto Multiplicado:</strong> Com a versão 3.0, o tempo de processamento foi reduzido ainda mais, e a usabilidade melhorou significativamente.</li>
+            <li><strong>Sustentabilidade do Projeto:</strong> A evolução contínua garante que a solução permaneça atual e eficiente frente às novas demandas organizacionais.</li>
+        </ul>
+
+        <h3>Resultados Quantitativos e Qualitativos</h3>
+        <div style="background-color: var(--darker-bg); padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid var(--cyber-green);">
+            <h4 style="color: var(--cyber-green); margin-top: 0;">Versão 2.0 (Tkinter - 2024)</h4>
+            <ul>
+                <li>Redução de tempo: de 6-8 horas para 5-10 minutos</li>
+                <li>Economia de tempo: ~95% de eficiência</li>
+                <li>Interface: Desktop nativa funcional</li>
+                <li>Dependências: Arquivo de configuração pex.lic</li>
+            </ul>
+            
+            <h4 style="color: var(--cyber-blue); margin-top: 20px;">Versão 3.0 (Flask/Web - 2025)</h4>
+            <ul>
+                <li>Redução adicional de tempo: processo ainda mais otimizado</li>
+                <li>Economia de treinamento: interface intuitiva elimina curva de aprendizado</li>
+                <li>Interface: Web responsiva e moderna</li>
+                <li>Autonomia total: eliminação de dependências externas</li>
+                <li>Segurança aprimorada: assinatura digital e logs detalhados</li>
+            </ul>
+        </div>
+
+        <h3>Lições Aprendidas e Desenvolvimento Profissional</h3>
+        <p>A evolução deste projeto proporcionou crescimento técnico e pessoal significativo:</p>
+        <ul>
+            <li><strong>Manutenção de Software:</strong> Experiência prática em evoluir e manter sistemas em produção.</li>
+            <li><strong>Gestão de Requisitos:</strong> Habilidade de capturar e implementar novas necessidades do cliente.</li>
+            <li><strong>Arquitetura de Software:</strong> Transição de interfaces desktop para soluções web modernas.</li>
+            <li><strong>Relacionamento com Cliente:</strong> Construção de confiança através da entrega consistente de valor.</li>
+            <li><strong>Inovação Contínua:</strong> Capacidade de reimaginar soluções existentes com tecnologias emergentes.</li>
+        </ul>
+
+        <h3>Impacto Social Ampliado</h3>
+        <p>Além dos benefícios operacionais diretos, o projeto teve impacto social ampliado:</p>
+        <ul>
+            <li><strong>Eficiência Organizacional:</strong> Liberação de recursos humanos para atividades mais estratégicas da igreja.</li>
+            <li><strong>Capacitação Tecnológica:</strong> Introdução de soluções tecnológicas modernas em ambiente tradicionalmente não-tecnológico.</li>
+            <li><strong>Sustentabilidade:</strong> Redução de desperdício de tempo e recursos, permitindo maior foco em atividades sociais.</li>
+            <li><strong>Replicabilidade:</strong> Modelo de solução que pode ser adaptado para outras organizações similares.</li>
+        </ul>
+
+        <h3>Perspectivas Futuras</h3>
+        <p>O projeto estabelece bases para futuras colaborações e desenvolvimentos:</p>
+        <ul>
+            <li>Possibilidade de extensão para outros processos administrativos da igreja</li>
+            <li>Adaptação da solução para outras organizações do terceiro setor</li>
+            <li>Integração com sistemas de gestão mais amplos</li>
+            <li>Desenvolvimento de funcionalidades adicionais conforme demandas emergentes</li>
+        </ul>
+
+        <p><strong>Conclusão Final:</strong> O que iniciou como um projeto acadêmico evoluiu para uma parceria tecnológica contínua, demonstrando como soluções bem desenvolvidas podem gerar impacto duradouro e abrir caminhos para colaborações futuras. A versão 3.0 não apenas aprimora o software existente, mas consolida um relacionamento de confiança e inovação entre desenvolvedor e organização beneficiária.</p>
 
         
 

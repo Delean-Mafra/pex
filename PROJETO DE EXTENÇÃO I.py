@@ -13,7 +13,7 @@ import logging
 from flask import Flask, render_template_string, request, jsonify
 from PIL import Image
 import io
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 
 app = Flask(__name__)
 
