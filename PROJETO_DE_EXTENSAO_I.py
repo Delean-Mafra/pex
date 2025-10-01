@@ -18,6 +18,9 @@ from pypdf import PdfReader
 
 app = Flask(__name__)
 
+# Defina aqui o diretório raiz confiável para processamento
+BASE_ROOT_DIR = "/trusted/base/dir"  # Altere conforme necessário para o ambiente de produção
+
 def validar_caminho_seguro(caminho):
     """
     Valida e sanitiza um caminho de arquivo para prevenir path injection.
@@ -63,7 +66,15 @@ def validar_caminho_seguro(caminho):
                 return False, "Caminho não existe"
         except (OSError, PermissionError):
             return False, "Acesso negado ao caminho"
-            
+        
+        # NOVO: Verificar se o caminho está dentro da BASE_ROOT_DIR confiável
+        base_root = Path(BASE_ROOT_DIR).resolve()
+        try:
+            # O método .relative_to() lança ValueError se caminho_path não estiver dentro de base_root
+            caminho_path.relative_to(base_root)
+        except ValueError:
+            return False, f"Caminho fora do diretório permitido ({BASE_ROOT_DIR})"
+        
         # Verificar se é um diretório
         try:
             if not caminho_path.is_dir():
