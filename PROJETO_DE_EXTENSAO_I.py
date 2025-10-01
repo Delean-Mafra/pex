@@ -18,12 +18,13 @@ from pypdf import PdfReader
 
 app = Flask(__name__)
 
-def validar_caminho_seguro(caminho):
+def validar_caminho_seguro(caminho, base_path=None):
     """
-    Valida e sanitiza um caminho de arquivo para prevenir path injection.
+    Valida e sanitiza um caminho de arquivo para prevenir path injection, assegurando que o caminho permaneça dentro de uma pasta base segura.
     
     Args:
         caminho (str): Caminho a ser validado
+        base_path (str or Path, opcional): Pasta base segura. Se None, usa o diretório atual.
         
     Returns:
         tuple: (bool, str) - (é_seguro, caminho_normalizado)
@@ -47,12 +48,24 @@ def validar_caminho_seguro(caminho):
         if os.name == 'nt':
             if caminho.startswith('\\\\') and not (
                 caminho.startswith('\\\\localhost\\') or 
+        # Padronizar base_path (diretório raiz seguro)
+        if base_path is None:
+            base_path = os.getcwd()
+        base_path_abs = Path(base_path).resolve()
+        
                 caminho.startswith('\\\\127.0.0.1\\')
             ):
                 return False, "Caminhos UNC remotos não são permitidos"
         
         # Agora é seguro usar Path() com dados pré-validados
         try:
+        # Checar se o caminho está contido no base_path usando commonpath
+        try:
+            if os.path.commonpath([str(caminho_path), str(base_path_abs)]) != str(base_path_abs):
+                return False, "O caminho não está contido na pasta permitida"
+        except Exception:
+            return False, "Erro ao verificar containment do caminho"
+        
             caminho_path = Path(caminho).resolve()
         except (OSError, ValueError) as path_error:
             return False, "Formato de caminho inválido"
@@ -507,6 +520,8 @@ def calcular_hash(arquivo, pasta_base):
     
     return hash_sha256.hexdigest()
 
+    # Definir pasta base de contenção (pode customizar ou deixar como cwd)
+    pasta_base_segura = os.getcwd()
 def verificar_duplicados(caminho_pasta):
     """
     Verifica e remove arquivos duplicados na pasta especificada com validação de segurança.
@@ -518,7 +533,7 @@ def verificar_duplicados(caminho_pasta):
         tuple: (sucesso, mensagem, caminho_log)
     """
     # Validar caminho de entrada
-    is_safe, resultado = validar_caminho_seguro(caminho_pasta)
+    is_safe, resultado = validar_caminho_seguro(caminho_pasta, pasta_base_segura)
     if not is_safe:
         return False, f"Caminho inválido: {resultado}", None
     
