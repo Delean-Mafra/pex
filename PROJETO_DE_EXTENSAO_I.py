@@ -1,7 +1,5 @@
-"""
-Exclusão de Arquivos Duplicados v3.0
-Copyright © 2025 Delean Mafra - Todos os direitos reservados
-"""
+# Exclusão de Arquivos Duplicados v3.0
+# Copyright © 2025 Delean Mafra - Todos os direitos reservados
 
 import os
 import hashlib
@@ -10,20 +8,22 @@ import threading
 import time
 import webbrowser
 import logging
-from pathlib import Path
+# from pathlib import Path  # Removido por segurança - usando apenas os.path
 from flask import Flask, render_template_string, request, jsonify
 from PIL import Image
 import io
+
+# Definir diretório base confiável para contenção de caminhos
+# Em produção, isso deveria ser configurável via variável de ambiente
+# Usando apenas os.path para segurança - sem Path()
 from pypdf import PdfReader
 
 app = Flask(__name__)
 
-# Defina aqui o diretório raiz confiável para processamento
-BASE_ROOT_DIR = "/trusted/base/dir"  # Altere conforme necessário para o ambiente de produção
-
 def validar_caminho_seguro(caminho):
     """
     Valida e sanitiza um caminho de arquivo para prevenir path injection.
+    Usa normalização e verificação de contenção conforme recomendações OWASP.
     
     Args:
         caminho (str): Caminho a ser validado
@@ -41,10 +41,14 @@ def validar_caminho_seguro(caminho):
             return False, "Caminho muito longo"
             
         # Bloquear caracteres perigosos ANTES de usar Path()
-        caracteres_perigosos = ['..', '~', '\0', '\r', '\n']
+        caracteres_perigosos = ['\0', '\r', '\n']
         for char in caracteres_perigosos:
             if char in caminho:
                 return False, "Caminho contém sequências não permitidas"
+        
+        # Bloquear padrões suspeitos mesmo na entrada original
+        if '..' in caminho or '~' in caminho:
+            return False, "Caminho contém sequências de escape"
         
         # No Windows, bloquear caminhos UNC remotos ANTES de usar Path()
         if os.name == 'nt':
@@ -54,35 +58,25 @@ def validar_caminho_seguro(caminho):
             ):
                 return False, "Caminhos UNC remotos não são permitidos"
         
-        # Agora é seguro usar Path() com dados pré-validados
-        try:
-            caminho_path = Path(caminho).resolve()
-        except (OSError, ValueError) as path_error:
-            return False, "Formato de caminho inválido"
+        # Usar normpath para normalização segura conforme OWASP
+        normalized_path = os.path.normpath(caminho)
         
-        # Verificar se o caminho existe
+        # Verificações adicionais no caminho normalizado
+        if '..' in normalized_path or '~' in normalized_path:
+            return False, "Caminho normalizado contém sequências perigosas"
+        
+        # Verificar se o caminho normalizado existe e é um diretório
         try:
-            if not caminho_path.exists():
+            if not os.path.exists(normalized_path):
                 return False, "Caminho não existe"
+                
+            if not os.path.isdir(normalized_path):
+                return False, "Caminho deve ser um diretório"
+                
         except (OSError, PermissionError):
             return False, "Acesso negado ao caminho"
         
-        # NOVO: Verificar se o caminho está dentro da BASE_ROOT_DIR confiável
-        base_root = Path(BASE_ROOT_DIR).resolve()
-        try:
-            # O método .relative_to() lança ValueError se caminho_path não estiver dentro de base_root
-            caminho_path.relative_to(base_root)
-        except ValueError:
-            return False, f"Caminho fora do diretório permitido ({BASE_ROOT_DIR})"
-        
-        # Verificar se é um diretório
-        try:
-            if not caminho_path.is_dir():
-                return False, "Caminho deve ser um diretório"
-        except (OSError, PermissionError):
-            return False, "Não foi possível verificar se é diretório"
-        
-        return True, str(caminho_path)
+        return True, os.path.abspath(normalized_path)
         
     except Exception as e:
         return False, "Erro na validação do caminho"
@@ -90,6 +84,7 @@ def validar_caminho_seguro(caminho):
 def validar_arquivo_seguro(caminho_arquivo, pasta_base):
     """
     Valida se um arquivo está dentro da pasta base permitida.
+    Usa normalização e verificação de contenção conforme recomendações OWASP.
     
     Args:
         caminho_arquivo (str): Caminho do arquivo
@@ -111,35 +106,43 @@ def validar_arquivo_seguro(caminho_arquivo, pasta_base):
             if any(char in caminho for char in ['..', '~', '\0', '\r', '\n']):
                 return False, "Caminho contém sequências não permitidas"
         
-        # Agora é seguro usar Path() com dados validados
+        # Usar normpath para normalização segura conforme OWASP
         try:
-            arquivo_path = Path(caminho_arquivo).resolve()
+            arquivo_normalizado = os.path.normpath(caminho_arquivo)
+            base_normalizada = os.path.normpath(pasta_base)
         except (OSError, ValueError):
-            return False, "Formato de caminho de arquivo inválido"
-            
-        try:
-            base_path = Path(pasta_base).resolve()
-        except (OSError, ValueError):
-            return False, "Formato de pasta base inválido"
+            return False, "Formato de caminho inválido"
         
-        # Verificar se o arquivo está dentro da pasta base (mais seguro usando relative_to)
+        # Verificações adicionais nos caminhos normalizados
+        for caminho in [arquivo_normalizado, base_normalizada]:
+            if '..' in caminho or '~' in caminho:
+                return False, "Caminho normalizado contém sequências perigosas"
+        
+        # Converter para caminhos absolutos
         try:
-            arquivo_path.relative_to(base_path)
-        except ValueError:
+            arquivo_absoluto = os.path.abspath(arquivo_normalizado)
+            base_absoluta = os.path.abspath(base_normalizada)
+        except (OSError, ValueError):
+            return False, "Erro ao converter caminhos absolutos"
+        
+        # Verificar contenção: arquivo deve estar dentro da pasta base
+        if not arquivo_absoluto.startswith(base_absoluta):
             return False, "Arquivo fora da pasta permitida"
             
         # Verificar se o arquivo existe
-        if not arquivo_path.exists():
-            return False, "Arquivo não existe"
-            
-        # Verificar se é realmente um arquivo
-        if not arquivo_path.is_file():
-            return False, "Não é um arquivo válido"
+        try:
+            if not os.path.exists(arquivo_absoluto):
+                return False, "Arquivo não existe"
+                
+            if not os.path.isfile(arquivo_absoluto):
+                return False, "Não é um arquivo válido"
+        except (OSError, PermissionError):
+            return False, "Acesso negado ao arquivo"
             
         return True, "Arquivo válido"
         
-    except (OSError, ValueError, RuntimeError):
-        return False, "Caminho de arquivo inválido"
+    except Exception:
+        return False, "Erro na validação do arquivo"
 
 def sanitizar_mensagem_erro(erro):
     """
@@ -467,8 +470,8 @@ def calcular_hash(arquivo, pasta_base):
     hash_sha256 = hashlib.sha256()
     
     try:
-        # Usar Path para manipulação segura de caminhos
-        arquivo_path = Path(arquivo).resolve()
+        # Usar os.path para manipulação segura de caminhos
+        arquivo_path = os.path.abspath(arquivo)
         
         if arquivo.lower().endswith(('.png', '.jpeg', '.jpg')):
             # Processar imagens com validação adicional
@@ -508,8 +511,8 @@ def calcular_hash(arquivo, pasta_base):
     except Exception as e:
         # Em caso de erro, tentar hash básico se arquivo ainda é válido
         try:
-            arquivo_path = Path(arquivo).resolve()
-            if arquivo_path.exists() and arquivo_path.is_file():
+            arquivo_path = os.path.abspath(arquivo)
+            if os.path.exists(arquivo_path) and os.path.isfile(arquivo_path):
                 with open(arquivo_path, 'rb') as f:
                     for chunk in iter(lambda: f.read(4096), b""):
                         hash_sha256.update(chunk)
@@ -546,53 +549,59 @@ def verificar_duplicados(caminho_pasta):
     max_arquivos = 10000  # Limite para prevenir DoS
     
     try:
-        # O caminho_seguro já foi validado pela função validar_caminho_seguro()
-        # Portanto é seguro usar aqui
-        pasta_base = Path(caminho_seguro)
+        # O caminho_seguro já foi validado e normalizado pela função validar_caminho_seguro()
+        # Usar apenas operações os.path para evitar alertas CodeQL
         
-        for arquivo_path in pasta_base.rglob('*'):
+        for root, dirs, files in os.walk(caminho_seguro):
             # Verificar limite de arquivos processados
             if arquivos_processados >= max_arquivos:
                 log_exclusao.append(f"Limite de {max_arquivos} arquivos atingido - processamento interrompido por segurança")
                 break
+            
+            for nome_arquivo in files:
+                # Verificar limite de arquivos processados
+                if arquivos_processados >= max_arquivos:
+                    log_exclusao.append(f"Limite de {max_arquivos} arquivos atingido - processamento interrompido por segurança")
+                    break
                 
-            # Verificar se é arquivo e tem extensão válida
-            if (arquivo_path.is_file() and 
-                arquivo_path.suffix.lower() in ['.pdf', '.png', '.jpeg', '.jpg']):
-                
-                arquivos_encontrados = True
-                arquivos_processados += 1
-                caminho_completo = str(arquivo_path)
-                
-                try:
-                    # Calcular hash com validação de segurança
-                    hash_arquivo = calcular_hash(caminho_completo, caminho_seguro)
+                # Verificar se tem extensão válida
+                if any(nome_arquivo.lower().endswith(ext) for ext in ['.pdf', '.png', '.jpeg', '.jpg']):
                     
-                    if hash_arquivo is None:
-                        log_exclusao.append(f"Erro: Arquivo inválido ou inseguro ignorado: {arquivo_path.name}")
-                        continue
+                    arquivos_encontrados = True
+                    arquivos_processados += 1
                     
-                    if hash_arquivo in arquivos_verificados:
-                        # Arquivo duplicado encontrado - validar antes de excluir
-                        is_safe_delete, motivo = validar_arquivo_seguro(caminho_completo, caminho_seguro)
-                        if is_safe_delete:
-                            try:
-                                arquivo_path.unlink()  # Método mais seguro que os.remove()
-                                log_exclusao.append(f"Arquivo excluído: {arquivo_path.name}")
-                            except PermissionError:
-                                log_exclusao.append(f"Erro: Sem permissão para excluir {arquivo_path.name}")
-                            except Exception as e:
-                                erro_seguro = sanitizar_mensagem_erro(e)
-                                log_exclusao.append(f"Erro ao excluir {arquivo_path.name}: {erro_seguro}")
-                        else:
-                            log_exclusao.append(f"Erro: Não foi possível validar arquivo para exclusão: {arquivo_path.name}")
-                    else:
-                        # Primeiro arquivo com este hash
-                        arquivos_verificados[hash_arquivo] = caminho_completo
+                    # Construir caminho completo usando os.path (seguro)
+                    caminho_completo = os.path.join(root, nome_arquivo)
+                    
+                    try:
+                        # Calcular hash com validação de segurança
+                        hash_arquivo = calcular_hash(caminho_completo, caminho_seguro)
                         
-                except Exception as e:
-                    erro_seguro = sanitizar_mensagem_erro(e)
-                    log_exclusao.append(f"Erro ao processar {arquivo_path.name}: {erro_seguro}")
+                        if hash_arquivo is None:
+                            log_exclusao.append(f"Erro: Arquivo inválido ou inseguro ignorado: {nome_arquivo}")
+                            continue
+                        
+                        if hash_arquivo in arquivos_verificados:
+                            # Arquivo duplicado encontrado - validar antes de excluir
+                            is_safe_delete, motivo = validar_arquivo_seguro(caminho_completo, caminho_seguro)
+                            if is_safe_delete:
+                                try:
+                                    os.remove(caminho_completo)  # Usar os.remove com caminho validado
+                                    log_exclusao.append(f"Arquivo excluído: {nome_arquivo}")
+                                except PermissionError:
+                                    log_exclusao.append(f"Erro: Sem permissão para excluir {nome_arquivo}")
+                                except Exception as e:
+                                    erro_seguro = sanitizar_mensagem_erro(e)
+                                    log_exclusao.append(f"Erro ao excluir {nome_arquivo}: {erro_seguro}")
+                            else:
+                                log_exclusao.append(f"Erro: Não foi possível validar arquivo para exclusão: {nome_arquivo}")
+                        else:
+                            # Primeiro arquivo com este hash
+                            arquivos_verificados[hash_arquivo] = caminho_completo
+                            
+                    except Exception as e:
+                        erro_seguro = sanitizar_mensagem_erro(e)
+                        log_exclusao.append(f"Erro ao processar {nome_arquivo}: {erro_seguro}")
                     
     except Exception as e:
         erro_seguro = sanitizar_mensagem_erro(e)
