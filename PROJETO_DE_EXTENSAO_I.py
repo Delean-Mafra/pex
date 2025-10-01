@@ -111,8 +111,10 @@ def validar_arquivo_seguro(caminho_arquivo, pasta_base):
         except (OSError, ValueError):
             return False, "Formato de pasta base inválido"
         
-        # Verificar se o arquivo está dentro da pasta base
-        if not str(arquivo_path).startswith(str(base_path)):
+        # Verificar se o arquivo está dentro da pasta base (mais seguro usando relative_to)
+        try:
+            arquivo_path.relative_to(base_path)
+        except ValueError:
             return False, "Arquivo fora da pasta permitida"
             
         # Verificar se o arquivo existe
