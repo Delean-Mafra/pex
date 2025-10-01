@@ -18,13 +18,13 @@ from pypdf import PdfReader
 
 app = Flask(__name__)
 
-def validar_caminho_seguro(caminho):
+def validar_caminho_seguro(caminho, safe_root=SAFE_ROOT_PATH):
     """
-    Valida e sanitiza um caminho de arquivo para prevenir path injection.
+    Valida e sanitiza um caminho de arquivo para prevenir path injection e garante que o caminho esteja dentro do diretório seguro.
     
     Args:
         caminho (str): Caminho a ser validado
-        
+        safe_root (Path): Diretório seguro
     Returns:
         tuple: (bool, str) - (é_seguro, caminho_normalizado)
     """
@@ -51,9 +51,16 @@ def validar_caminho_seguro(caminho):
             ):
                 return False, "Caminhos UNC remotos não são permitidos"
         
-        # Agora é seguro usar Path() com dados pré-validados
+        # Monta caminho absoluto relativo ao diretório seguro
         try:
-            caminho_path = Path(caminho).resolve()
+            caminho_path = (safe_root / caminho).resolve()
+        # Garante que o caminho está dentro do root seguro
+        try:
+            if not str(caminho_path).startswith(str(safe_root)):
+                return False, "Caminho fora do diretório permitido"
+        except Exception:
+            return False, "Erro ao verificar diretório seguro"
+            
         except (OSError, ValueError) as path_error:
             return False, "Formato de caminho inválido"
         
@@ -63,7 +70,7 @@ def validar_caminho_seguro(caminho):
                 return False, "Caminho não existe"
         except (OSError, PermissionError):
             return False, "Acesso negado ao caminho"
-            
+        
         # Verificar se é um diretório
         try:
             if not caminho_path.is_dir():
@@ -518,7 +525,7 @@ def verificar_duplicados(caminho_pasta):
         tuple: (sucesso, mensagem, caminho_log)
     """
     # Validar caminho de entrada
-    is_safe, resultado = validar_caminho_seguro(caminho_pasta)
+    is_safe, resultado = validar_caminho_seguro(caminho_pasta, SAFE_ROOT_PATH)
     if not is_safe:
         return False, f"Caminho inválido: {resultado}", None
     
