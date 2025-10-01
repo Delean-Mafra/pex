@@ -6,6 +6,9 @@ Copyright © 2025 Delean Mafra - Todos os direitos reservados
 import os
 import hashlib
 import datetime
+
+# Diretório raiz seguro para todas as operações de arquivos
+ROOT_DIR = os.path.abspath("DIRETORIO_SEGURO")  # Substitua por um caminho seguro permitido ao usuário, ex: "/home/appuser/uploads"
 import threading
 import time
 import webbrowser
@@ -18,13 +21,13 @@ from pypdf import PdfReader
 
 app = Flask(__name__)
 
-def validar_caminho_seguro(caminho):
+def validar_caminho_seguro(caminho, base_dir):
     """
     Valida e sanitiza um caminho de arquivo para prevenir path injection.
     
     Args:
         caminho (str): Caminho a ser validado
-        
+        base_dir (str): Caminho base seguro permitido
     Returns:
         tuple: (bool, str) - (é_seguro, caminho_normalizado)
     """
@@ -56,8 +59,16 @@ def validar_caminho_seguro(caminho):
             caminho_path = Path(caminho).resolve()
         except (OSError, ValueError) as path_error:
             return False, "Formato de caminho inválido"
-        
-        # Verificar se o caminho existe
+
+        # Verificar se o caminho está dentro do diretório base seguro
+        base_dir_resolved = os.path.abspath(base_dir)
+        caminho_path_str = str(caminho_path)
+            comum = os.path.commonpath([caminho_path_str, base_dir_resolved])
+        except ValueError:  # C: (e.g., Windows drive mismatch)
+            return False, "Caminho fora do diretório permitido"
+        if comum != base_dir_resolved:
+            return False, "Caminho fora do diretório permitido"
+        try:
         try:
             if not caminho_path.exists():
                 return False, "Caminho não existe"
@@ -518,7 +529,7 @@ def verificar_duplicados(caminho_pasta):
         tuple: (sucesso, mensagem, caminho_log)
     """
     # Validar caminho de entrada
-    is_safe, resultado = validar_caminho_seguro(caminho_pasta)
+    is_safe, resultado = validar_caminho_seguro(caminho_pasta, ROOT_DIR)
     if not is_safe:
         return False, f"Caminho inválido: {resultado}", None
     
