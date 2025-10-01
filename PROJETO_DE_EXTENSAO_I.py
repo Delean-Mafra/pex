@@ -13,10 +13,33 @@ from flask import Flask, render_template_string, request, jsonify
 from PIL import Image
 import io
 
-# Definir diretório base confiável para contenção de caminhos
-# Em produção, isso deveria ser configurável via variável de ambiente
-# Usando apenas os.path para segurança - sem Path()
 from pypdf import PdfReader
+
+# Diretório raiz permitido para todas as operações de arquivos.
+# Pode ser sobrescrito definindo a variável de ambiente PEX_ALLOWED_ROOT.
+_config_root = os.environ.get('PEX_ALLOWED_ROOT')
+if _config_root:
+    _config_root = os.path.realpath(os.path.abspath(os.path.normpath(_config_root)))
+else:
+    _config_root = os.path.realpath(os.path.expanduser('~'))
+
+if not os.path.isdir(_config_root):
+    _config_root = os.path.realpath(os.getcwd())
+
+BASE_ALLOWED_ROOT = _config_root
+
+
+def _normalize_to_abs(path: str) -> str:
+    """Normaliza e converte um caminho para absoluto resolvendo links simbólicos."""
+    return os.path.realpath(os.path.abspath(os.path.normpath(path)))
+
+
+def _is_path_within(base: str, target: str) -> bool:
+    """Verifica se target está contido dentro de base usando commonpath."""
+    try:
+        return os.path.commonpath([base, target]) == base
+    except ValueError:
+        return False
 
 app = Flask(__name__)
 
@@ -60,23 +83,30 @@ def validar_caminho_seguro(caminho):
         
         # Usar normpath para normalização segura conforme OWASP
         normalized_path = os.path.normpath(caminho)
-        
+
         # Verificações adicionais no caminho normalizado
         if '..' in normalized_path or '~' in normalized_path:
             return False, "Caminho normalizado contém sequências perigosas"
-        
-        # Verificar se o caminho normalizado existe e é um diretório
+
+        # Converter para caminho absoluto seguro
+        absolute_path = _normalize_to_abs(normalized_path)
+
+        # Conter a navegação dentro do diretório raíz permitido
+        if not _is_path_within(BASE_ALLOWED_ROOT, absolute_path):
+            return False, "Caminho fora da área permitida"
+
+        # Verificar se o caminho absoluto existe e é um diretório
         try:
-            if not os.path.exists(normalized_path):
+            if not os.path.exists(absolute_path):
                 return False, "Caminho não existe"
-                
-            if not os.path.isdir(normalized_path):
+
+            if not os.path.isdir(absolute_path):
                 return False, "Caminho deve ser um diretório"
-                
+
         except (OSError, PermissionError):
             return False, "Acesso negado ao caminho"
-        
-        return True, os.path.abspath(normalized_path)
+
+        return True, absolute_path
         
     except Exception as e:
         return False, "Erro na validação do caminho"
@@ -91,7 +121,7 @@ def validar_arquivo_seguro(caminho_arquivo, pasta_base):
         pasta_base (str): Pasta base permitida
         
     Returns:
-        tuple: (bool, str) - (é_seguro, motivo)
+        tuple: (bool, str) - (é_seguro, caminho_sanitizado_ou_motivo)
     """
     try:
         # Validar entradas ANTES de usar Path()
@@ -118,15 +148,19 @@ def validar_arquivo_seguro(caminho_arquivo, pasta_base):
             if '..' in caminho or '~' in caminho:
                 return False, "Caminho normalizado contém sequências perigosas"
         
-        # Converter para caminhos absolutos
+        # Converter para caminhos absolutos seguros
         try:
-            arquivo_absoluto = os.path.abspath(arquivo_normalizado)
-            base_absoluta = os.path.abspath(base_normalizada)
+            arquivo_absoluto = _normalize_to_abs(arquivo_normalizado)
+            base_absoluta = _normalize_to_abs(base_normalizada)
         except (OSError, ValueError):
             return False, "Erro ao converter caminhos absolutos"
-        
+
+        # Garantir que a pasta base está dentro do diretório permitido
+        if not _is_path_within(BASE_ALLOWED_ROOT, base_absoluta):
+            return False, "Pasta base fora da área permitida"
+
         # Verificar contenção: arquivo deve estar dentro da pasta base
-        if not arquivo_absoluto.startswith(base_absoluta):
+        if not _is_path_within(base_absoluta, arquivo_absoluto):
             return False, "Arquivo fora da pasta permitida"
             
         # Verificar se o arquivo existe
@@ -138,8 +172,8 @@ def validar_arquivo_seguro(caminho_arquivo, pasta_base):
                 return False, "Não é um arquivo válido"
         except (OSError, PermissionError):
             return False, "Acesso negado ao arquivo"
-            
-        return True, "Arquivo válido"
+        
+        return True, arquivo_absoluto
         
     except Exception:
         return False, "Erro na validação do arquivo"
@@ -463,17 +497,16 @@ def calcular_hash(arquivo, pasta_base):
         str: Hash SHA-256 do arquivo ou None se inválido
     """
     # Validar arquivo antes de processar
-    is_safe, motivo = validar_arquivo_seguro(arquivo, pasta_base)
+    is_safe, arquivo_validado = validar_arquivo_seguro(arquivo, pasta_base)
     if not is_safe:
         return None
-    
+
     hash_sha256 = hashlib.sha256()
-    
+    arquivo_path = arquivo_validado
+    arquivo_lower = arquivo_path.lower()
+
     try:
-        # Usar os.path para manipulação segura de caminhos
-        arquivo_path = os.path.abspath(arquivo)
-        
-        if arquivo.lower().endswith(('.png', '.jpeg', '.jpg')):
+        if arquivo_lower.endswith(('.png', '.jpeg', '.jpg')):
             # Processar imagens com validação adicional
             with open(arquivo_path, 'rb') as f:
                 img = Image.open(f)
@@ -488,9 +521,9 @@ def calcular_hash(arquivo, pasta_base):
                         img.save(img_bytes, format='PNG')
                         hash_sha256.update(img_bytes.getvalue())
                         
-        elif arquivo.lower().endswith('.pdf'):
+        elif arquivo_lower.endswith('.pdf'):
             # Processar PDFs com validação de tamanho
-            arquivo_size = arquivo_path.stat().st_size
+            arquivo_size = os.path.getsize(arquivo_path)
             if arquivo_size > 100 * 1024 * 1024:  # 100MB
                 # Para PDFs muito grandes, usar hash do arquivo
                 with open(arquivo_path, 'rb') as f:
@@ -511,7 +544,6 @@ def calcular_hash(arquivo, pasta_base):
     except Exception as e:
         # Em caso de erro, tentar hash básico se arquivo ainda é válido
         try:
-            arquivo_path = os.path.abspath(arquivo)
             if os.path.exists(arquivo_path) and os.path.isfile(arquivo_path):
                 with open(arquivo_path, 'rb') as f:
                     for chunk in iter(lambda: f.read(4096), b""):
