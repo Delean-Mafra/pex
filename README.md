@@ -1,4 +1,4 @@
-# PROJETO DE EXTENÇÃO I - Exclusão de Arquivos Duplicados v3.0
+# PROJETO DE EXTENSÃO I - Exclusão de Arquivos Duplicados v3.0
 
 Projeto de Extensão I (CDADOS) – Ferramenta para identificar e excluir arquivos duplicados (PDF, PNG, JPEG/JPG) com interface web.
 
@@ -43,7 +43,7 @@ Eliminar arquivos duplicados em uma pasta informada pelo usuário, liberando esp
 ## Estrutura dos Arquivos Principais
 | Arquivo | Função |
 |---------|--------|
-| `PROJETO DE EXTENÇÃO I.py` | Aplicação Flask + lógica de exclusão + UI embutida em `INDEX_HTML` |
+| `PROJETO DE EXTENSÃO I.py` | Aplicação Flask + lógica de exclusão + UI embutida em `INDEX_HTML` |
 | `version_compilador.py` | Script de build PyInstaller (gera executável e faz assinatura digital) |
 | `version.txt` | Metadados de versão usados pelo PyInstaller (`--version-file`) |
 | `ico.png` | Ícone do executável |
@@ -62,7 +62,7 @@ pip install flask Pillow PyPDF2
 
 ## Execução em Ambiente de Desenvolvimento
 ```
-python "PROJETO DE EXTENÇÃO I.py"
+python "PROJETO DE EXTENSÃO I.py"
 ```
 O script:
 1. Inicia o servidor Flask em `http://127.0.0.1:5000/`

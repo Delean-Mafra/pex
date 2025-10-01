@@ -21,12 +21,12 @@ VSVersionInfo(
           '041604B0',
           [
             StringStruct('CompanyName', 'DELEAN MAFRA'),
-            StringStruct('FileDescription', 'PROJETO DE EXTENÇÃO I'),
+            StringStruct('FileDescription', 'PROJETO DE EXTENSÃO I'),
             StringStruct('FileVersion', '3.0.0.0'),
-            StringStruct('InternalName', 'PROJETO DE EXTENÇÃO I'),
+            StringStruct('InternalName', 'PROJETO DE EXTENSÃO I'),
             StringStruct('LegalCopyright', '© Delean Mafra, All rights reserved.'),
-            StringStruct('OriginalFilename', 'PROJETO DE EXTENÇÃO I.exe'),
-            StringStruct('ProductName', 'PROJETO DE EXTENÇÃO I'),
+            StringStruct('OriginalFilename', 'PROJETO DE EXTENSÃO I.exe'),
+            StringStruct('ProductName', 'PROJETO DE EXTENSÃO I'),
             StringStruct('ProductVersion', '3.0.0.3'),
           ]
         )
