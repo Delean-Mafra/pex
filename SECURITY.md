@@ -1,10 +1,7 @@
-# v 3.0.0.5
+# Changelog Versão 3.0.0.4 - Correções Críticas de Segurança
 
-
-# Changelog Versão 3.0.0.5 - Correções Críticas de Segurança
-
-## Resumo da Versão 3.0.0.5
-A versão 3.0.0.5 representa uma **atualização crítica de segurança** que elimina **16 vulnerabilidades** detectadas por ferramentas de análise automatizada (Dependabot e CodeQL). Esta versão mantém toda a funcionalidade da 3.0.0.0 enquanto implementa robustas medidas de proteção contra ataques de path injection, buffer overflow, execução remota de código e exposição de informações sensíveis.
+## Resumo da Versão 3.0.0.4
+A versão 3.0.0.4 representa uma **atualização crítica de segurança** que elimina **16 vulnerabilidades** detectadas por ferramentas de análise automatizada (Dependabot e CodeQL). Esta versão mantém toda a funcionalidade da 3.0.0.0 enquanto implementa robustas medidas de proteção contra ataques de path injection, buffer overflow, execução remota de código e exposição de informações sensíveis.
 
 ---
 
@@ -113,7 +110,7 @@ PyPDF2==3.0.1         # ❌ VULNERÁVEL + DESCONTINUADO
 Werkzeug==2.3.7       # ❌ MÚLTIPLAS VULNERABILIDADES
 ```
 
-### **Depois (requirements.txt v3.0.0.5)**
+### **Depois (requirements.txt v3.0.0.4)**
 ```
 Flask>=3.1.0          # Versão moderna e segura
 Pillow>=10.3.0        # ✅ TODAS CVEs CORRIGIDAS
@@ -157,13 +154,13 @@ from pathlib import Path  # Adicionado para segurança
 
 ## 📊 ESTATÍSTICAS DE SEGURANÇA
 
-### **Antes da v3.0.0.5**
+### **Antes da v3.0.0.4**
 - 🔴 **7 CVEs críticas/altas** em dependências
 - 🔴 **9 alertas CodeQL** no código fonte
 - 🔴 **16 vulnerabilidades totais**
 - 🔴 **Status**: ALTO RISCO
 
-### **Depois da v3.0.0.5**
+### **Depois da v3.0.0.4**
 - ✅ **0 CVEs conhecidas** em dependências
 - ✅ **0 alertas CodeQL** no código
 - ✅ **0 vulnerabilidades detectadas**
@@ -193,7 +190,7 @@ from pathlib import Path  # Adicionado para segurança
 
 ---
 
-## 🔄 GUIA DE MIGRAÇÃO 3.0.0.0 → 3.0.0.5
+## 🔄 GUIA DE MIGRAÇÃO 3.0.0.0 → 3.0.0.4
 
 ### **Dependências**
 ```bash
@@ -360,7 +357,7 @@ Mesmo após a entrega anterior, decidiu-se manter suporte evolutivo voluntário,
 
 ## Cronologia de Versões da Série 3.0
 
-### **v 3.0.0.5** (Atual) - Hardening de Segurança
+### **v 3.0.0.4** (Atual) - Hardening de Segurança
 - **Data**: Setembro 2025
 - **Foco**: Correção crítica de 16 vulnerabilidades de segurança
 - **Principais mudanças**:
@@ -389,14 +386,14 @@ Mesmo após a entrega anterior, decidiu-se manter suporte evolutivo voluntário,
 ### **v 3.0.0.0** (Base) - Migração Flask
 - **Data**: Maio 2025
 - **Foco**: Migração Tkinter → Flask (interface web)
-- **Status**: Base mantida, mas com vulnerabilidades corrigidas na 3.0.0.5
+- **Status**: Base mantida, mas com vulnerabilidades corrigidas na 3.0.0.4
 
 ---
 
 ## ⚠️ RECOMENDAÇÃO CRÍTICA
-**TODAS as versões anteriores à 3.0.0.5 contêm vulnerabilidades de segurança conhecidas e NÃO devem ser utilizadas em produção.**
+**TODAS as versões anteriores à 3.0.0.4 contêm vulnerabilidades de segurança conhecidas e NÃO devem ser utilizadas em produção.**
 
-**Migre imediatamente para a versão 3.0.0.5 para garantir:**
+**Migre imediatamente para a versão 3.0.0.4 para garantir:**
 - ✅ Segurança máxima
 - ✅ Proteção contra ataques
 - ✅ Conformidade com padrões de segurança
@@ -415,6 +412,6 @@ Esta versão foi **validada e certificada** pelos seguintes sistemas de análise
 ## Créditos
 © 2025 Delean Mafra – Todos os direitos reservados.
 
-**Versão 3.0.0.5** – Interface Flask com segurança corporativa e proteção total contra vulnerabilidades.
+**Versão 3.0.0.4** – Interface Flask com segurança corporativa e proteção total contra vulnerabilidades.
 
 **Igreja Apostólica Renascer em Cristo** - Ferramenta administrativa certificada para uso em produção.
