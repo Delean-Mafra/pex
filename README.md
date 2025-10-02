@@ -20,7 +20,7 @@ Eliminar arquivos duplicados em uma pasta informada pelo usuário, liberando esp
 | Seleção de pasta | Somente leitura via arquivo de licença | Botão "Selecionar Pasta" (diálogo nativo) + campo manual |
 | Feedback de progresso | Caixa de diálogo simples | Página dinâmica com mensagens e log | 
 | Direitos autorais | Texto local | Iframe para página oficial externa |
-| Empacotamento | PyInstaller básico | Script de compilação com assinatura digital opcional |
+| Empacotamento | PyInstaller básico | Script de compilação com assinatura digital|
 
 ## Como a Detecção de Duplicados Funciona
 1. Percorre recursivamente a pasta selecionada.
@@ -82,7 +82,7 @@ O que ele faz:
    - `--onefile`
    - Ícone personalizado (`ico.png`)
    - Hidden imports necessários (Flask, PIL, PyPDF2, tkinter.filedialog)
-4. (Opcional) Assina o executável usando certificado `certificado-code-signing.pfx` se presente e senha configurada.
+4. Assina o executável usando certificado `certificado-code-signing.pfx` se presente e senha configurada.
 
 ### Ajustes Possíveis
 - Remover `--console` para ocultar o terminal.
