@@ -77,7 +77,7 @@
 > Se você remixar, transformar ou criar a partir do material, deve distribuir suas contribuições sob a mesma licença.
 
 **🔗 Link da Licença**
-> [creativecommons.org/licenses/by-nc-sa/4.0/](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+> [creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br)
 
 </td>
 </tr>
