@@ -95,19 +95,84 @@
 - **Nome:** Delean P. Mafra
 - **Curso:** Ciência de Dados
 - **Instituição:** Descomplica Faculdade Digital
-- **Projeto:** Projeto de Extensão III
+- **Projeto:** Projeto de Extensão I
 - **Ano:** 2025
 
 ### 🌐 **Links**
-- **GitHub:** [Delean-Mafra/pex3](https://github.com/Delean-Mafra/pex3)
+- **GitHub:** [Delean-Mafra/pex](https://github.com/Delean-Mafra/pex)
 - **LinkedIn:** [delean-mafra](https://www.linkedin.com/in/delean-mafra/)
 
 </td>
 <td width="50%">
 
+### 📚 **Como Citar Esta Obra**
 
-Este software foi desenvolvido em conformidade com a **ISO 56005:2020**, que orienta a gestão da propriedade intelectual em processos de inovação.  
-Foram adotadas práticas de documentação de autoria (controle de versões em Git), definição de licença de uso e análise de riscos relacionados ao uso de bibliotecas externas, garantindo a proteção e valorização do resultado inovador.
+```
+Delean Mafra. Relatório de Atividades: Projeto de Extensão I, 
+Ciência de Dados. Atividade extensionista realizado para 
+organização IGREJA APOSTÓLICA RENASCER EM CRISTO. 
+Instituição: Descomplica Faculdade Digital. 
+https://github.com/Delean-Mafra/pex. 
+Acesso em: [data]. Licença: CC BY-NC-SA 4.0.
+```
 
+</td>
+</tr>
+</table>
 
 ---
+
+## 📧 **CONTATO E PERMISSÕES ESPECIAIS**
+
+<table>
+<tr>
+<td width="33%">
+
+### 💼 **Uso Comercial**
+> Para uso comercial desta obra, entre em contato diretamente com o autor para obter autorização expressa e discutir os termos de licenciamento comercial.
+
+</td>
+<td width="33%">
+
+### 🎨 **Adaptações e Remixes**
+> Adaptações e remixes são permitidos desde que mantida a atribuição ao autor original e distribuídos sob a mesma licença CC BY-NC-SA 4.0.
+
+</td>
+<td width="33%">
+
+### ⚖️ **Dúvidas Legais**
+> Para esclarecimentos sobre direitos autorais, licenciamento ou questões legais, consulte um profissional especializado em propriedade intelectual.
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🎓 **REGULAMENTAÇÃO ESPECÍFICA PARA PROJETOS DE EXTENSÃO**
+
+### 📋 **Resolução CNE/CES nº 7, de 18 de dezembro de 2018**
+
+> Esta obra, na qualidade de **Projeto de Extensão na Educação Superior**, também se enquadra nas diretrizes estabelecidas pela **Resolução CNE/CES nº 7/2018**. Esta normativa, do Conselho Nacional de Educação, regulamenta as atividades de extensão, tornando-as componentes curriculares obrigatórios nos cursos de graduação, com o objetivo de promover a interação transformadora entre as instituições de ensino superior e os demais setores da sociedade.
+
+> A presente obra, como **atividade extensionista**, contribui para a formação cidadã do estudante, articulando ensino, pesquisa e extensão, conforme os princípios desta Resolução. Seu desenvolvimento e conclusão estão alinhados com o **Art. 15º** da referida Resolução, que determina o devido registro, documentação e análise das atividades de extensão para organização de planos de trabalho, metodologias e conhecimentos gerados.
+
+---
+
+> ### ✅ **CONFORMIDADE REGULATÓRIA**
+> 
+> **Este projeto atende aos requisitos estabelecidos pela regulamentação nacional para atividades de extensão universitária, garantindo sua validade acadêmica e social.**
+
+---
+
+<div align="center">
+
+### 📄 **INFORMAÇÕES COMPLEMENTARES**
+
+*Esta página complementa as informações legais do **Projeto de Extensão I - CDADOS***
+
+[![CC BY-NC-SA 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+**© 2025 Delean Mafra - Todos os direitos reservados**
+
+</div>
