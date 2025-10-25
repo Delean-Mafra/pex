@@ -32,6 +32,6 @@
 
 ### 5. Disposições Gerais
 - **Compromisso com a Qualidade:** Promover a excelência nas atividades desenvolvidas, seguindo as melhores práticas e normas profissionais.
-- **Atualização do Código:** Este código será revisado e atualizado periodicamente para garantir sua adequação às novas diretrizes e necessidades do projeto.
+- **Atualização do Código:** Este código podera ser revisado e atualizado periodicamente para garantir sua adequação às novas diretrizes e necessidades do projeto.
 
 
