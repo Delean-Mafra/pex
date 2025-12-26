@@ -8,7 +8,7 @@
 
 ![Creative Commons License](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg)
 
-**Licença:** [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br)
+**Licença:** [CC BY-NC-SA 4.0](https://delean-mafra.github.io/Ahtools/CC_BY_NC_4.0)
 
 </div>
 
@@ -51,10 +51,10 @@
 
 <div align="center">
 
-[![CC](https://mirrors.creativecommons.org/presskit/icons/cc.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![BY](https://mirrors.creativecommons.org/presskit/icons/by.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![NC](https://mirrors.creativecommons.org/presskit/icons/nc.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![SA](https://mirrors.creativecommons.org/presskit/icons/sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![CC](https://mirrors.creativecommons.org/presskit/icons/cc.svg)](https://delean-mafra.github.io/Ahtools/CC_BY_NC_4.0)
+[![BY](https://mirrors.creativecommons.org/presskit/icons/by.svg)](https://delean-mafra.github.io/Ahtools/CC_BY_NC_4.0)
+[![NC](https://mirrors.creativecommons.org/presskit/icons/nc.svg)](https://delean-mafra.github.io/Ahtools/CC_BY_NC_4.0)
+[![SA](https://mirrors.creativecommons.org/presskit/icons/sa.svg)](https://delean-mafra.github.io/Ahtools/CC_BY_NC_4.0)
 
 </div>
 
@@ -77,7 +77,7 @@
 > Se você remixar, transformar ou criar a partir do material, deve distribuir suas contribuições sob a mesma licença.
 
 **🔗 Link da Licença**
-> [creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br)
+> [delean-mafra.github.io/Ahtools/CC_BY_NC_4.0](https://delean-mafra.github.io/Ahtools/CC_BY_NC_4.0)
 
 </td>
 </tr>
@@ -171,7 +171,7 @@ Acesso em: [data]. Licença: CC BY-NC-SA 4.0.
 
 *Esta página complementa as informações legais do **Projeto de Extensão I - CDADOS***
 
-[![CC BY-NC-SA 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![CC BY-NC-SA 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg)](https://delean-mafra.github.io/Ahtools/CC_BY_NC_4.0)
 
 **© 2025 Delean Mafra - Todos os direitos reservados**
 
