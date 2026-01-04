@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/898218271.svg)](https://doi.org/10.5281/zenodo.18142968)
+
 # PROJETO DE EXTENSÃO I - Exclusão de Arquivos Duplicados v3.0
 
 Projeto de Extensão I (CDADOS) – Ferramenta para identificar e excluir arquivos duplicados (PDF, PNG, JPEG/JPG) com interface web.
