@@ -1,32 +1,14 @@
-# Dependências principais - versões seguras e atualizadas
-# CORREÇÕES DE VULNERABILIDADES DE SEGURANÇA:
+# Dependências principais com versões mínimas endurecidas contra alertas de segurança.
+# Mantemos limites inferiores recentes para evitar seleção de releases antigas vulneráveis.
 
-# Flask - Framework web principal
-Flask>=3.1.0
+# Flask stack
+Flask>=3.1.2
+Werkzeug>=3.1.3
+Jinja2>=3.1.6
+MarkupSafe>=3.0.2
 
-# Pillow - Processamento de imagens 
-# Corrige CVE-2023-50447 (Arbitrary Code Execution) e CVE-2024-28219 (Buffer Overflow)
-Pillow>=10.3.0
+# Processamento de imagens
+Pillow>=11.3.0
 
-# PyPDF2 - DESCONTINUADO: Migrando para pypdf (recomendação oficial)
-# PyPDF2 3.0.1 contém CVE-2023-36464 (Infinite Loop DoS)
-# Substituindo por pypdf que é o sucessor oficial e não tem vulnerabilidades conhecidas
-pypdf>=3.9.0
-
-# Werkzeug - Servidor WSGI
-# Corrige múltiplas CVEs:
-# - CVE-2024-34069 (Debugger RCE) 
-# - CVE-2024-49767 (Resource Exhaustion)
-# - CVE-2024-49766 (Unsafe Path Join)
-# - CVE-2023-46136 (DoS via Multipart Parsing)
-Werkzeug>=3.0.6
-
-# Dependência para interface nativa (seletor de pasta)
-# Tkinter já vem incluído no Python padrão
-
-# NOTA IMPORTANTE: PyPDF2 foi descontinuado em favor do pypdf
-# Versões atuais instaladas após correções:
-# - Flask: 3.1.1 ✅ (seguro)
-# - Pillow: 11.2.1 ✅ (muito acima da versão mínima segura 10.3.0)
-# - pypdf: 5.6.0 ✅ (muito acima da versão mínima segura 3.9.0)
-# - Werkzeug: 3.1.3 ✅ (muito acima da versão mínima segura 3.0.6)
+# PDFs (sucessor oficial do PyPDF2)
+pypdf>=5.6.1
