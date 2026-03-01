@@ -92,8 +92,8 @@ pyinstaller_cmd = [
     f'--name={exe_name}',
     f'--version-file={correct_version_file_path}',
     f'--icon={icon_path}',
-    f'--distpath={BASE_DIR / 'dist'}',
-    f'--workpath={BASE_DIR / 'build'}',
+    f"--distpath={BASE_DIR / 'dist'}",
+    f"--workpath={BASE_DIR / 'build'}",
     f'--specpath={BASE_DIR}',
     # Módulos necessários para o app Flask de exclusão (reduzido para acelerar build)
     '--hidden-import=flask',
