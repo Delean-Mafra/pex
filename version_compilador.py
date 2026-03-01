@@ -39,7 +39,7 @@ def limpar_arquivos_antigos():
         BASE_DIR / 'build',
         BASE_DIR / 'dist',
         BASE_DIR / '__pycache__',
-        BASE_DIR / 'PROJETO DE EXTENSÃO I.spec'
+        BASE_DIR / 'PROJETO DE EXTENÇÃO I.spec'
     ]
      
     import shutil
@@ -79,15 +79,15 @@ limpar_arquivos_antigos()
 
 print("Executando PyInstaller...")
 # Arquivo principal a ser empacotado (atualizado para usar a versão com interface Flask completa)
-python_file_path = str(BASE_DIR / 'PROJETO DE EXTENSÃO I.py')
+python_file_path = str(BASE_DIR / 'PROJETO DE EXTENÇÃO I.py')
 
 # Nome do executável (PyInstaller gerará <exe_name>.exe). Pode conter espaços, mas definimos também uma versão sem espaços para facilitar checagens.
-exe_name = 'PROJETO DE EXTENSÃO I'
+exe_name = 'PROJETO DE EXTENÇÃO I'
 exe_name_fs = exe_name  # Mantém nome original; se preferir sem espaços use: exe_name_fs = exe_name.replace(' ', '_')
 
 # Comando PyInstaller com binários e dados específicos
 pyinstaller_cmd = [
-    'pyinstaller',
+    'python', '-m', 'PyInstaller',
     '--onefile',
     f'--name={exe_name}',
     f'--version-file={correct_version_file_path}',
@@ -214,6 +214,7 @@ def sign_executable_with_certificate(exe_path, cert_path, cert_password=None):
         cmd = [
             signtool_path, 'sign',
             '/f', cert_path,
+            '/a',  # Selecionar automaticamente o melhor certificado
             '/fd', 'SHA256',  # Algoritmo de hash recomendado
             '/t', 'http://timestamp.digicert.com',  # Servidor de timestamp
             '/v',  # Verbose output
