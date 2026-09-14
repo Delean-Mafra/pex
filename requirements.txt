@@ -8,7 +8,7 @@ Jinja2>=3.1.6
 MarkupSafe>=3.0.2
 
 # Processamento de imagens
-Pillow>=11.3.0
+Pillow>=12.3.0
 
 # PDFs (sucessor oficial do PyPDF2)
 # >=6.8.0 corrige CVEs reportadas pelo Dependabot (#24 e #25).
