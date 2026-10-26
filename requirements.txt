@@ -12,4 +12,4 @@ Pillow>=11.3.0
 
 # PDFs (sucessor oficial do PyPDF2)
 # >=6.8.0 corrige CVEs reportadas pelo Dependabot (#24 e #25).
-pypdf>=6.8.0
+pypdf>=6.21.2
